@@ -1,0 +1,138 @@
+<template>
+  <div>
+      <!-- {{ items }} -->
+          
+          
+        <div class="ac">
+            <p>usuário logado é essse: {{ userData.email }}</p>
+        </div>
+     <br>
+     <br>
+     <br>
+      <div class="" v-for="(item ,index) in items" :key="index">
+        <vs-button
+            v-if="userData._id != item.user_response[0]._id"
+            class="ac mt-2"
+            size="large"
+            gradient
+            animation-type="scale"
+            :active="active == 0"
+            @click="openActiveChat(item)"
+        >
+            <BIconEnvelope class="icon-size-20"/>
+            <span class="ml-2"> {{ item.user_response[0].name }} </span>
+            <b-avatar 
+                v-if="item.user_response[0].img_profile != '' " 
+                class="ml-2" 
+                :src='item.user_response[0].img_profile'
+            ></b-avatar>
+            
+            <template #animate >
+                Send message
+            </template>
+        </vs-button>
+
+        <vs-button
+            v-if="userData._id != item.user_origin[0]._id"
+            class="ac mt-2"
+            size="large"
+            gradient
+            animation-type="scale"
+            :active="active == 1"
+            @click="openActiveChat(item)"
+        >
+            <BIconEnvelope class="icon-size-20"/>
+            <span class="ml-2"> {{ item.user_origin[0].name }} </span>
+            <b-avatar 
+                v-if="item.user_origin[0].img_profile != '' "
+                class="ml-2" :src='item.user_origin[0].img_profile'
+            ></b-avatar>
+            
+            <template #animate >
+                Send message 
+            </template>
+        </vs-button>
+
+      </div>
+
+        
+            <vs-dialog prevent-close :loading="false" v-model="chatModalDialog">
+                <ChatModal :chatId="propsChatData"/>
+            </vs-dialog>
+
+  </div>
+</template>
+
+<script>
+import { mapActions, mapGetters } from 'vuex';
+import ChatModal from './cpmChatmodal'
+export default {
+    data:() =>({
+        items:[],
+        active: 0,
+        propsChatData: '',
+        chatModalDialog: false,
+    }),
+
+    components:{
+        ChatModal
+    },
+
+    methods:{
+        ...mapActions({
+            getUserData: 'getUserData'
+        }),
+
+        listChatConections(){
+
+            let userId = this.userData
+            this.$http.get(this.prodUrl + `/chats/userid/${userId._id}`)
+            .then(resp => {
+                console.log("@#$%¨&*(*&¨%$#@")
+                console.log(resp)
+                this.items = resp.data
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        },
+
+        async checkUserData(){
+            if(this.userData != ''){
+                this.listChatConections()
+            }else{
+                await this.getUserData()
+            }
+        },
+
+        openActiveChat(param){
+            console.log(param._id)
+            this.propsChatData = param._id
+            this.chatModalDialog = true
+        }
+    },
+    created(){
+        this.checkUserData()
+    },
+    computed: {
+        ...mapGetters({
+            prodUrl: 'prodUrl',
+            userData:'userData'
+        })
+    },
+
+    watch:{
+        async userData(){
+            if(this.userData != ''){
+                this.listChatConections()
+            }else{
+                await this.getUserData()
+            }
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>

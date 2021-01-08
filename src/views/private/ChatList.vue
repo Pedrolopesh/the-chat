@@ -1,23 +1,27 @@
 <template>
     <div>
-        <h1>LISTA DE CONVERSAS</h1>
+        <h1>SUAS CONVERSAS</h1>
 
         <!-- <vs-button
             @click="openNotification">
             Open Notification
         </vs-button> -->
         <div>
-            <ActiveChat/>
+            <!-- <ActiveChat/> -->
+            <ChatsConections/>
         </div>
 
 
     </div>
 </template>
 <script>
-import ActiveChat from '../../components/ActiveChat'
+import ActiveChat from '../../components/ActiveChat';
+import ChatsConections from '../../components/ChatsConections';
+
 export default {
     components:{
         ActiveChat,
+        ChatsConections
     },
     data:() => ({
     }),

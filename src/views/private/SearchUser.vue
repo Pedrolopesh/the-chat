@@ -1,63 +1,31 @@
 <template>
     <div>
-        <h1>conversas</h1>
+        <h1>TODO OS USUÁRIOS DO APP</h1>
         <br/>
         <br/>
         <!-- {{ items[0].user_origin }} -->
         <br/>
         <br/>
         <br/>
-        <div @click="selectUser(item)" class="container-list-chats ac" v-for="(item, i) in items" :key='i'>
-                <div v-if=" userType == 'user_response' ">
-                    <!-- Informações do usuário response -->
-                        <!-- {{ item.user_response[i].name }} -->
+        <div @click="createChat(item)" class="container-list-chats ac" v-for="(item, i) in items" :key='i'>
+            <vs-button
+                v-if="userData._id != item._id"
+                class="display-b ac mt-2"
+                size="large"
+                gradient
+                warn
+                animation-type="scale"
+            >
 
-                    <div v-for="(item, i) in item.user_response" :key="i">
+                <BIconEnvelope class="icon-size-20"/>
+                <span class="ml-2">{{ item.name }} </span>
+                <b-avatar class="ml-2" :src='item.img_profile'></b-avatar>
+                
+                <template #animate >
+                    Send message 
+                </template>
 
-                    <vs-button
-                        class="display-b ac mt-2"
-                        size="large"
-                        gradient
-                        warn
-                        animation-type="scale"
-                    >
-
-                        <BIconEnvelope class="icon-size-20"/>
-                        <span class="ml-2">{{ item.name }} </span>
-                        <b-avatar class="ml-2" :src='item.img_profile'></b-avatar>
-                        
-                        <template #animate >
-                            Send message 
-                        </template>
-
-                    </vs-button>
-
-                    </div>
-                </div>
-
-                <div v-else>
-                    <div v-for="(item, i) in item.user_origin" :key="i">
-                    {{ item.email}}
-                    <vs-button
-                        class="display-b ac mt-2"
-                        size="large"
-                        gradient
-                        warn
-                        animation-type="scale"
-                    >
-
-                        <BIconEnvelope class="icon-size-20"/>
-                        <span class="ml-2">{{ item.name }} </span>
-                        <b-avatar class="ml-2" :src='item.img_profile'></b-avatar>
-                        
-                        <template #animate >
-                            Send message 
-                        </template>
-
-                    </vs-button>
-
-                    </div>
-                </div>
+            </vs-button>
         </div>
 
     </div>
@@ -65,6 +33,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { BIconEnvelope } from 'bootstrap-vue';
+import dayjs from 'dayjs';
 
 export default {
     data:() => ({
@@ -85,43 +54,24 @@ export default {
         })
     },
     methods:{
-        checkAciveChats(){
+        getAllUsers(){
             this.$store.commit('setApiLoading', true)
 
-            // console.log(this.userData.chats)
-            let logedId = localStorage.getItem('id')
-            this.$http.get(this.prodUrl + `/user/${logedId}`).then(response => {
-                
-                let chats = response.data.chats
-                for(let i in chats){
-                    
-                    let id = chats[i]
-                    
-                    this.$http.get(this.prodUrl + `/chat/messages/${id}`)
-                    
-                    .then(resp => {
-                        if(resp.data == ''){
-                            this.$store.commit('setApiLoading', false)
 
-                        }else{
-                            this.$store.commit('setApiLoading', false)
+            this.$http.get(this.prodUrl + '/list/users')
+                .then(resp => {
+                if(resp.data == ''){ this.$store.commit('setApiLoading', false)}
+                else{ this.$store.commit('setApiLoading', false) }
 
-                        }
-                        // console.log(resp.data)
-                        this.items.push(resp.data)
-                        // setTimeout( () => {  this.checkDatas() }, 200);
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-                }
-                this.checkTypeUser(this.items)
-                // console.log("skadkpsadkposakdposkadpa")
-                // console.log(this.items)
+                this.items = resp.data
+                // setTimeout( () => {  this.checkDatas() }, 200);
             })
             .catch(err => {
                 console.log(err)
             })
+
+            let logedId = localStorage.getItem('id')
+
         },
         checkTypeUser(param){
             
@@ -163,18 +113,46 @@ export default {
             
             }
         },
-        selectUser(param){
+        createChat(param){
+            console.log(param)
+            var now = dayjs()
+            let time = now.format("HH:mm")
+            let date = now.format("DD/MM/YYYY")
+
+            let chatData = { source: "origin", message: "olá, mensagem enviada pela web", timestamp: date + '-' + time}
+            let body = {
+                user_origin:this.userData._id,
+                user_response:param._id,
+                chatData:chatData
+            }
+
+            this.$http.post(this.prodUrl + '/create/chat', body)
+            .then(resp =>{
+                console.log(resp)
+                if(resp.data.error == 'Alredy have a chat'){
+                    console.log(resp.data.message._id)
+                    this.$vs.notification({
+                        color: 'danger',
+                        position: 'top-center',
+                        title: 'você já possui uma conversa com esse usuário. vá em conversas 😓',
+                    })
+
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
             
-            this.selectedChatId = param._id
+            // this.selectedChatId = param._id
 
             // this.$store.commit("setSelectedChatData", param);
             
-            this.chatModal = true
+            // this.chatModal = true
             
         },
     },
     created(){
-        this.checkAciveChats()
+        this.getAllUsers()
     }
 }
 </script>
