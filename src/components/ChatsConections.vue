@@ -9,49 +9,62 @@
      <br>
      <br>
      <br>
-      <div class="" v-for="(item ,index) in items" :key="index">
-        <vs-button
-            v-if="userData._id != item.user_response[0]._id"
-            class="ac mt-2"
-            size="large"
-            gradient
-            animation-type="scale"
-            :active="active == 0"
-            @click="openActiveChat(item)"
-        >
-            <BIconEnvelope class="icon-size-20"/>
-            <span class="ml-2"> {{ item.user_response[0].name }} </span>
-            <b-avatar 
-                v-if="item.user_response[0].img_profile != '' " 
-                class="ml-2" 
-                :src='item.user_response[0].img_profile'
-            ></b-avatar>
-            
-            <template #animate >
-                Send message
-            </template>
-        </vs-button>
+    <div v-if="items == '' " class="ac">
+          <div class="ac display-b container-alert" relief>
+            <h1>
+            Aviso!
+            </h1>
+            <h3 class="">Você não possui mensagens ainda, tente ir até a seção de usuários para iniciar uma nova conversa.</h3>
+        </div>
+    </div>
+    
+    <div v-else>
 
-        <vs-button
-            v-if="userData._id != item.user_origin[0]._id"
-            class="ac mt-2"
-            size="large"
-            gradient
-            animation-type="scale"
-            :active="active == 1"
-            @click="openActiveChat(item)"
-        >
-            <BIconEnvelope class="icon-size-20"/>
-            <span class="ml-2"> {{ item.user_origin[0].name }} </span>
-            <b-avatar 
-                v-if="item.user_origin[0].img_profile != '' "
-                class="ml-2" :src='item.user_origin[0].img_profile'
-            ></b-avatar>
-            
-            <template #animate >
-                Send message 
-            </template>
-        </vs-button>
+        <div class="" v-for="(item ,index) in items" :key="index">
+            <vs-button
+                v-if="userData._id != item.user_response[0]._id"
+                class="ac mt-2"
+                size="large"
+                gradient
+                animation-type="scale"
+                :active="active == 0"
+                @click="openActiveChat(item)"
+            >
+                <BIconEnvelope class="icon-size-20"/>
+                <span class="ml-2"> {{ item.user_response[0].name }} </span>
+                <b-avatar 
+                    v-if="item.user_response[0].img_profile != '' " 
+                    class="ml-2" 
+                    :src='item.user_response[0].img_profile'
+                ></b-avatar>
+                
+                <template #animate >
+                    Send message
+                </template>
+            </vs-button>
+
+            <vs-button
+                v-if="userData._id != item.user_origin[0]._id"
+                class="ac mt-2"
+                size="large"
+                gradient
+                animation-type="scale"
+                :active="active == 1"
+                @click="openActiveChat(item)"
+            >
+                <BIconEnvelope class="icon-size-20"/>
+                <span class="ml-2"> {{ item.user_origin[0].name }} </span>
+                <b-avatar 
+                    v-if="item.user_origin[0].img_profile != '' "
+                    class="ml-2" :src='item.user_origin[0].img_profile'
+                ></b-avatar>
+                
+                <template #animate >
+                    Send message 
+                </template>
+            </vs-button>
+
+        </div>
 
       </div>
 
@@ -133,6 +146,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+    .container-alert{
+        max-width: 70%;
+        width: 100%;
+    }
 </style>
