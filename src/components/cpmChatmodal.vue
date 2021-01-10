@@ -11,27 +11,57 @@
           <div id="container-chat" v-if="chatMessages.length > 0" class="chat-content"> 
 
 
-            <div v-for="(messageObj, i) in chatMessages" :key="i" class="p15">
+            <div v-for="(messageObj, i) in chatMessages" :key="i" class="">
               
               <div class="message-block">
 
                 <div v-if="messageObj.sender == 'origin'">
+                    <div 
+                      class="container-message p10"
+                      :class="[userData.name == chatOrigin.user_origin.name ?'flex-reverse' : '']"
+                      >
+                      
+                        
                         <div v-if="chatOrigin.user_origin.img_profile != '' ">
+                          <b-avatar :src='chatOrigin.user_origin.img_profile' class="mr-a display-b mt-3"></b-avatar>
+                        </div>
+                      <!-- <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatOrigin.user_origin.name }} </span> -->
+                      <span class="display-b alg-txt-s chip-black ml-2 mr-2 mt-3"> {{ messageObj.message }} </span>
+                    </div>
+                    
+                    
+                    
+                    
+                    <!-- <div v-if="chatOrigin.user_origin.img_profile != '' ">
+                          <b-avatar :src='chatOrigin.user_origin.img_profile' class="mr-a display-b mt-3"></b-avatar>
+                        </div> -->
+                      <!-- <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small> -->
+
+
+                        <!-- <div v-if="chatOrigin.user_origin.img_profile != '' ">
                           <b-avatar :src='chatOrigin.user_origin.img_profile' class="mr-a display-b mt-3"></b-avatar>
                         </div>
                       <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatOrigin.user_origin.name }} </span>
                       <span class="display-b alg-txt-s"> <strong>mensagem:</strong> {{ messageObj.message }} </span>
-                      <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small>
+                      <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small> -->
                 </div> 
 
                 <div v-else>
+                  <div
+                    class="container-message p10"
+                    :class="[userData.name == chatResponder.user_response.name ?'flex-reverse' : 'ue']"
+                  >
+                  <!-- {{ userData._id }} -->
+                  <!-- {{ chatOrigin.user_response._id }} -->
+
                   <div v-if="chatResponder.user_response.img_profile != '' ">
                     <b-avatar :src='chatResponder.user_response.img_profile' class="mr-a display-b mt-3"></b-avatar>
                   </div>
+                  <span class="display-b alg-txt-s chip-black ml-2 mr-2 mt-3">{{ messageObj.message }} </span>
 
-                  <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatResponder.user_response.name }} </span>
-                  <span class="display-b alg-txt-s"> <strong>mensagem:</strong> {{ messageObj.message }} </span>
-                  <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small>
+                  <!-- <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatResponder.user_response.name }} </span> -->
+                  <!-- <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small> -->
+                  </div>
                 </div>
 
                 <span v-if="i + 1 == chatMessages.length">
@@ -92,6 +122,7 @@ export default {
           {sendedName:'Fernanda', SendedMessage:'olá pedro, esse vai ser o nosso chat', sendedTimestamp:'08:00'},
         ],
 
+        stringTest:'',
         newMessage:'',
 
         userType:'',
@@ -140,6 +171,8 @@ export default {
           vm.newSocketMessage.push(message)
    
         })
+
+        this.formatMessage();
     },
 
     methods: {
@@ -294,6 +327,19 @@ export default {
 
        
       },
+
+      formatMessage(){
+        let newString = "aouttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+        // newString.replace(/(.{80})/g, "$1<br>")
+        newString.split(/,/g, ',<br>')
+
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        console.log(newString)
+        this.stringTest =  newString
+        // newString.split("\n")
+        // newString.join(' </br> ')
+
+      }
         
     },
 
@@ -304,3 +350,13 @@ export default {
     }
 }
 </script>
+<style lang="scss">
+  .container-message{
+    align-items: center;
+    display: flex;
+  }
+
+  .flex-reverse{
+    flex-direction: row-reverse;
+  }
+</style>

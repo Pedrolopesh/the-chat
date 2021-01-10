@@ -97,6 +97,13 @@ a{
     text-decoration: none;
 }
 
+.chip-black{
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+    // height: 35px;
+    border: 1px solid rgba(0, 0, 0, 0.466);
+}
+
 .logout-icon{
     width: 50px !important;
     height: 20px !important;
