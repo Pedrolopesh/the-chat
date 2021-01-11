@@ -11,9 +11,9 @@
         <Signin />
     </div>
 
-    <vs-button to="/ChatList">
+    <!-- <vs-button to="/ChatList">
       Chats
-    </vs-button>
+    </vs-button> -->
 
  </div>
 </template>
