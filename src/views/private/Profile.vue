@@ -33,8 +33,10 @@
               </template>
             </vs-avatar>
 
-            <h2 class="mt-3">{{ userData.name }}</h2>       
-            <span class="mt-3">{{ userData }}</span>       
+            <h2 class="mt-3">{{ userData.name }}</h2>    
+            <h2 class="mt-3">{{ userData.email }}</h2>    
+
+            <!-- <span class="mt-3">{{ userData }}</span>        -->
         </div>
 
             <vs-button
