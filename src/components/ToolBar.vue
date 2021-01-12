@@ -1,13 +1,12 @@
 <template>
-    <div class="hidden">
-      <vs-sidebar
+    <div>
+      <!-- <vs-sidebar
         absolute
         v-model="active"
         reduce
         :open.sync="activeSidebar"
         >
         <template #logo>
-          <!-- ...img logo -->
             <BIconChatDots/>
         </template>
 
@@ -59,7 +58,26 @@
 
           </vs-row>
         </template>
-      </vs-sidebar>
+      </vs-sidebar> -->
+
+      <div class="footer-bar ac">
+        
+        <vs-button to="/ChatList" gradient class="ac button-toolbar-first">
+          <BIconHouse/>
+          <span class="display-b">Home</span>
+        </vs-button>
+        
+        <vs-button to="/SearchUser" gradient class="ac button-toolbar-midle">
+          <BIconChatDots/>
+          <span class="display-b">Conversas</span>
+        </vs-button>
+        
+        <vs-button to="/Profile" gradient class="ac button-toolbar-end">
+          <BIconGear/>
+          <span class="display-b">Opções</span>
+        </vs-button>
+      
+      </div>
     </div>
 </template>
 <script>
@@ -102,3 +120,57 @@ export default {
     }
 }
 </script>
+<style lang="scss">
+  .footer-bar{
+    width: 100%;
+    display: flex;
+    max-width: 30%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0px 0px 20px 20px;
+    box-shadow: 7px 6px 15px rgba(0, 0, 0, 0.356) !important;
+
+    @media screen and (max-width: 700px){
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .button-toolbar,
+    .button-toolbar-first,
+    .button-toolbar-midle,
+    .button-toolbar-end{
+      margin-top: 0px;
+      margin-bottom: 0px;
+      display: block !important;
+      border: none;
+      padding: 6px;
+      max-width: 100%;
+      width: 100%;
+
+      div{
+        padding: 0;
+        display: block !important;
+      }
+      // transition-timing-function: ease-out;
+      // border-radius: 0px 0px 20px 20px;
+
+      &:hover{
+        transition:  0.2s;
+        background-image: linear-gradient(to right, #195bff , #873bff);
+        color: white;
+      }
+
+    }
+
+    .button-toolbar-midle{
+      border-radius: 0px !important;
+    }
+
+    .button-toolbar-first{
+      border-radius: 0px 0px 0px 20px;
+    }
+
+    .button-toolbar-end{
+      border-radius: 0px 0px 20px 0px;
+    }
+  }
+</style>
