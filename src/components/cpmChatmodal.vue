@@ -80,7 +80,7 @@
               <div class="d-flex">
                   <textarea class="text-input-chat" v-model="newMessage"/> 
                   
-                  <vs-button :loading="newMessageLoading" type="submit" class="send-message-button">
+                  <vs-button :loading="newMessageLoading" type="submit">
                     <BIconCursor @click="createMessage()" class="cp send-message-icon"/>
                   </vs-button>
                   

@@ -153,6 +153,12 @@ export default {
       .catch(err => {
 
         console.log(err)
+
+            this.$vs.notification({
+              color: 'danger',
+              position: 'top-center',
+              title: 'erro ao entrar, login ou senha invalidos',
+          })
         this.$store.commit('setApiLoading', false)
 
       })

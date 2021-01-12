@@ -118,7 +118,7 @@ export default {
             let time = now.format("HH:mm")
             let date = now.format("DD/MM/YYYY")
 
-            let chatData = [{ sender: "origin", message: "olá, mensagem enviada pela web", timestamp: date + '-' + time}]
+            let chatData = [{ sender: "origin", message: "olá", timestamp: date + '-' + time}]
             let body = {
                 user_origin:this.userData._id,
                 user_response:param._id,
@@ -135,7 +135,8 @@ export default {
                         position: 'top-center',
                         title: 'você já possui uma conversa com esse usuário. vá em conversas 😓',
                     })
-
+                }else{
+                    console.log(resp.data)
                 }
             })
             .catch(err => {
