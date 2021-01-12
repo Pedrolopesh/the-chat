@@ -152,9 +152,9 @@ export default {
     emailInputState:'primary',
 
     userData:{
-      name:'user_origin',
-      email:'user_origin@gmail.com',
-      password:'123123'
+      name:'',
+      email:'',
+      password:''
     }
   }),
   methods:{

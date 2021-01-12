@@ -108,7 +108,7 @@ export default {
 
     userData:{
       email:'',
-      password:'123123'
+      password:''
     }
   }),
 
