@@ -36,6 +36,7 @@
                 label-placeholder="Senha"
                 :visiblePassword="hasVisiblePassword"
                 icon-after
+                autocapitalize="none"
                 primary
                 state="primary"
                 @click-icon="hasVisiblePassword = !hasVisiblePassword"

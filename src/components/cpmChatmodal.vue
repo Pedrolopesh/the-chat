@@ -80,9 +80,9 @@
               <div class="d-flex">
                   <textarea class="text-input-chat" v-model="newMessage"/> 
                   
-                  <button type="submit" class="send-message-button">
-                    <BIconCursor @click="createMessage()" class="mt-2 ml-2 cp send-message-icon"/>
-                  </button>
+                  <vs-button :loading="newMessageLoading" type="submit" class="send-message-button">
+                    <BIconCursor @click="createMessage()" class="cp send-message-icon"/>
+                  </vs-button>
                   
               </div>
             </div>
@@ -130,6 +130,7 @@ export default {
         chatResponder: {},
 
         contentScrolled: false,
+        newMessageLoading: false,
         // we se a variable to decide if we want to call the last message function or not
 
     }),
@@ -247,6 +248,7 @@ export default {
         },
 
       createMessage(){
+        this.newMessageLoading = true
         this.checkTypeUser()
 
             // var today = new Date();
@@ -274,9 +276,9 @@ export default {
               
               this.newMessage = ''
               setTimeout( () => { this.loadChatById() }, 500);
-              
+              this.newMessageLoading = false
             }else{
-              
+              this.newMessageLoading = false
               alert('erro ao manda mensagem')
 
             }

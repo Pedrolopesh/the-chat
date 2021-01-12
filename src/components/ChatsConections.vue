@@ -7,14 +7,15 @@
             <!-- <p>usuário logado é essse: {{ userData.email }}</p> -->
             <p>Olá <strong> {{ userData.name }} </strong>, Veja a seguir as suas conversas</p>
         </div>
-    <div v-if="items == '' " class="ac">
-          <div class="ac display-b container-alert" relief>
-            <h1>
-            Aviso!
-            </h1>
-            <h4 class="">Você não possui mensagens ainda, tente ir até a seção de usuários para iniciar uma nova conversa.</h4>
+
+        <div v-if="items == '' " class="ac">
+            <div class="ac display-b container-alert" relief>
+                <h1>
+                Aviso!
+                </h1>
+                <h4 class="">Você não possui mensagens ainda, tente ir até a seção de usuários para iniciar uma nova conversa.</h4>
+            </div>
         </div>
-    </div>
     
     <div v-if="!chatModalDialog && items != '' ">
 

@@ -1,7 +1,11 @@
 <template>
     <div>
-        <h1 class="mt-3">TODO OS USUÁRIOS DO APP</h1>
+        <h2 class="mt-3">TODO OS USUÁRIOS DO APP</h2>
         <p>Olá <strong> {{ userData.name }} </strong>, veja a seguir todos os usuários que utilizam o nosso app</p>
+        <div v-if="items == ''">
+            ainda não há usuários cadastrados 😕, compartilhe o app com seus amigos.
+        </div>
+
         <div @click="createChat(item)" class="container-list-chats ac mt-5" v-for="(item, i) in items" :key='i'>
             <vs-button
                 v-if="userData._id != item._id"

@@ -70,7 +70,9 @@
             display: block;
             background-color: transparent;
             border: none;
-            border-bottom: 1px solid black;
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px solid black;
             max-width: 100%;
             width: 100%;
         }
