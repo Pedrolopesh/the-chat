@@ -62,17 +62,17 @@
 
       <div class="footer-bar ac">
         
-        <vs-button to="/ChatList" gradient class="ac button-toolbar-first">
+        <vs-button to="/ChatList" :active="activeRouter == 0" @click="activeRouter = 0" class="ac button-toolbar-first">
           <BIconHouse/>
           <span class="display-b">Home</span>
         </vs-button>
         
-        <vs-button to="/SearchUser" gradient class="ac button-toolbar-midle">
+        <vs-button to="/SearchUser" :active="activeRouter == 1" @click="activeRouter = 1" class="ac button-toolbar-midle">
           <BIconChatDots/>
           <span class="display-b">Conversas</span>
         </vs-button>
         
-        <vs-button to="/Profile" gradient class="ac button-toolbar-end">
+        <vs-button to="/Profile" :active="activeRouter == 2" @click="activeRouter = 2" class="ac button-toolbar-end">
           <BIconGear/>
           <span class="display-b">Opções</span>
         </vs-button>
@@ -93,7 +93,8 @@ export default {
     },
     data:() => ({
       active: 'home',
-      activeSidebar: true
+      activeSidebar: true,
+      activeRouter: 4
     }),
 
     methods:{
@@ -110,7 +111,22 @@ export default {
           localStorage.removeItem('token');
           localStorage.removeItem('_id');
           this.$router.push('/Home')
+        },
+
+        checkRouter(){
+          console.log(this.$router.currentRoute.fullPath)
+          if(this.$router.currentRoute.fullPath == "/ChatList")
+            this.activeRouter = 0
+          else if(this.$router.currentRoute.fullPath == "/SearchUser")
+            this.activeRouter = 1
+          else if(this.$router.currentRoute.fullPath == "/Profile")
+            this.activeRouter = 1
+            // console.log("você ta na chatlist")
         }
+    },
+
+    created(){
+      this.checkRouter()
     },
 
     computed:{

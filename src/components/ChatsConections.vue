@@ -4,11 +4,9 @@
           
           
         <div class="ac">
-            <p>usuário logado é essse: {{ userData.email }}</p>
+            <!-- <p>usuário logado é essse: {{ userData.email }}</p> -->
+            <p>Olá <strong> {{ userData.name }} </strong>, seja a seguir as suas conversas</p>
         </div>
-     <br>
-     <br>
-     <br>
     <div v-if="items == '' " class="ac">
           <div class="ac display-b container-alert" relief>
             <h1>
@@ -18,7 +16,7 @@
         </div>
     </div>
     
-    <div v-else>
+    <div v-if="!chatModalDialog && items != '' ">
 
         <div class="" v-for="(item ,index) in items" :key="index">
             <vs-button
@@ -68,17 +66,23 @@
 
       </div>
 
+        <div v-if="chatModalDialog">
+            <BIconArrowLeftCircle class="display-b mr-a ml-3 icon-back mb-3" @click="chatModalDialog = false"/>
+            <ChatModal :chatId="propsChatData"/>
+        </div>
         
-            <vs-dialog prevent-close :loading="false" v-model="chatModalDialog">
+            <!-- <vs-dialog prevent-close :loading="false" v-model="chatModalDialog">
                 <ChatModal :chatId="propsChatData"/>
-            </vs-dialog>
+            </vs-dialog> -->
 
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import ChatModal from './cpmChatmodal'
+import ChatModal from './cpmChatmodal';
+import { BIconEnvelope, BIconArrowLeftCircle } from 'bootstrap-vue';
+
 export default {
     data:() =>({
         items:[],
@@ -88,7 +92,9 @@ export default {
     }),
 
     components:{
-        ChatModal
+        ChatModal,
+        BIconEnvelope,
+        BIconArrowLeftCircle
     },
 
     methods:{
@@ -150,5 +156,9 @@ export default {
     .container-alert{
         max-width: 70%;
         width: 100%;
+    }
+
+    .icon-back{
+        font-size: 30px;
     }
 </style>
