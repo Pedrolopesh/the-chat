@@ -63,25 +63,25 @@
       <div class="footer-bar ac">
         
         <vs-button to="/ChatList" :active="activeRouter == 0" @click="activeRouter = 0" class="ac button-toolbar-first">
-          <BIconHouse/>
-          <span class="display-b">Home</span>
-        </vs-button>
-        
-        <vs-button to="/SearchUser" :active="activeRouter == 1" @click="activeRouter = 1" class="ac button-toolbar-midle">
           <BIconChatDots/>
           <span class="display-b">Conversas</span>
         </vs-button>
         
+        <vs-button to="/SearchUser" :active="activeRouter == 1" @click="activeRouter = 1" class="ac button-toolbar-midle">
+          <BIconPeopleFill/>
+          <span class="display-b">Usuários</span>
+        </vs-button>
+        
         <vs-button to="/Profile" :active="activeRouter == 2" @click="activeRouter = 2" class="ac button-toolbar-end">
-          <BIconGear/>
-          <span class="display-b">Opções</span>
+          <BIconPerson/>
+          <span class="display-b">Perfil</span>
         </vs-button>
       
       </div>
     </div>
 </template>
 <script>
-import { BIconHouse, BIconChatDots, BIconGear, BIconPersonCircle, BIconPower } from 'bootstrap-vue';
+import { BIconHouse, BIconChatDots, BIconGear, BIconPersonCircle, BIconPower, BIconPerson, BIconPeopleFill } from 'bootstrap-vue';
 import { mapGetters } from "vuex"
 export default {
     components:{
@@ -89,7 +89,9 @@ export default {
         BIconChatDots,
         BIconGear,
         BIconPersonCircle,
-        BIconPower
+        BIconPower,
+        BIconPerson,
+        BIconPeopleFill
     },
     data:() => ({
       active: 'home',
@@ -114,7 +116,6 @@ export default {
         },
 
         checkRouter(){
-          console.log(this.$router.currentRoute.fullPath)
           if(this.$router.currentRoute.fullPath == "/ChatList")
             this.activeRouter = 0
           else if(this.$router.currentRoute.fullPath == "/SearchUser")

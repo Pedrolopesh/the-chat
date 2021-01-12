@@ -5,14 +5,14 @@
           
         <div class="ac">
             <!-- <p>usuário logado é essse: {{ userData.email }}</p> -->
-            <p>Olá <strong> {{ userData.name }} </strong>, seja a seguir as suas conversas</p>
+            <p>Olá <strong> {{ userData.name }} </strong>, Veja a seguir as suas conversas</p>
         </div>
     <div v-if="items == '' " class="ac">
           <div class="ac display-b container-alert" relief>
             <h1>
             Aviso!
             </h1>
-            <h3 class="">Você não possui mensagens ainda, tente ir até a seção de usuários para iniciar uma nova conversa.</h3>
+            <h4 class="">Você não possui mensagens ainda, tente ir até a seção de usuários para iniciar uma nova conversa.</h4>
         </div>
     </div>
     
@@ -107,8 +107,7 @@ export default {
             let userId = this.userData
             this.$http.get(this.prodUrl + `/chats/userid/${userId._id}`)
             .then(resp => {
-                console.log("@#$%¨&*(*&¨%$#@")
-                console.log(resp)
+                // console.log(resp)
                 this.items = resp.data
             })
             .catch(err => {

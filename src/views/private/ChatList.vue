@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>SUAS CONVERSAS</h1>
+        <h1 class="mt-3">SUAS CONVERSAS</h1>
 
         <!-- <vs-button
             @click="openNotification">

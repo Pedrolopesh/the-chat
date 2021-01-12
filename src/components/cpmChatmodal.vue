@@ -5,23 +5,17 @@
 
         <div class="ac chat-container">
 
-
-
             <!-- <perfect-scrollbar> -->
-          <div id="container-chat" v-if="chatMessages.length > 0" class="chat-content"> 
+          <div id="container-chat" v-if="chatMessages != ''" class="chat-content"> 
 
 
             <div v-for="(messageObj, i) in chatMessages" :key="i" class="">
-              
               <div class="message-block">
-
                 <div v-if="messageObj.sender == 'origin'">
                     <div 
                       class="container-message p10"
                       :class="[userData.name == chatOrigin.user_origin.name ?'flex-reverse' : '']"
                       >
-                      
-                        
                         <div v-if="chatOrigin.user_origin.img_profile != '' ">
                           <b-avatar :src='chatOrigin.user_origin.img_profile' class="mr-a display-b mt-3"></b-avatar>
                         </div>
@@ -106,9 +100,10 @@ import {
 } from 'vuex';
 // import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
 import dayjs from 'dayjs';
-
+import notificationRecived from '../mixins/notifications';
 
 export default {
+  mixins: [notificationRecived],
   props:['chatId'],
 
     comments:{
@@ -161,22 +156,26 @@ export default {
       
         this.loadChatById()
 
-        console.log('Tentando conectar no socket')
+        // console.log('Tentando conectar no socket')
         let vm = this;
         this.socket.on('connection', (socket) => {
           console.log('User conected on socket')
         })
 
         this.socket.on('messageRecived', function(message) {
+          console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
           // console.log(message)
           vm.newSocketMessage.push(message)
    
         })
 
-        this.formatMessage();
     },
 
     methods: {
+      emitReciveMessage(){
+        this.recivedMessage()
+      },
+      
       testFunction(){
         if(!this.contentScrolled){
           // alert('ha, go go power rangers')
@@ -329,23 +328,24 @@ export default {
        
       },
 
-      formatMessage(){
-        let newString = "aouttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
-        // newString.replace(/(.{80})/g, "$1<br>")
-        newString.split(/,/g, ',<br>')
+      // formatMessage(){
+      //   let newString = "aouttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+      //   // newString.replace(/(.{80})/g, "$1<br>")
+      //   newString.split(/,/g, ',<br>')
 
-        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        console.log(newString)
-        this.stringTest =  newString
-        // newString.split("\n")
-        // newString.join(' </br> ')
+      //   console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+      //   console.log(newString)
+      //   this.stringTest =  newString
+      //   // newString.split("\n")
+      //   // newString.join(' </br> ')
 
-      }
+      // }
         
     },
 
     watch:{
       newSocketMessage(){
+        this.emitReciveMessage()
         setTimeout(() => (this.loadChatById()), 2000)
       }
     }

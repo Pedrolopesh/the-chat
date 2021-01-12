@@ -1,13 +1,8 @@
 <template>
     <div>
-        <h1>TODO OS USUÁRIOS DO APP</h1>
-        <br/>
-        <br/>
-        <!-- {{ items[0].user_origin }} -->
-        <br/>
-        <br/>
-        <br/>
-        <div @click="createChat(item)" class="container-list-chats ac" v-for="(item, i) in items" :key='i'>
+        <h1 class="mt-3">TODO OS USUÁRIOS DO APP</h1>
+        <p>Olá <strong> {{ userData.name }} </strong>, veja a seguir todos os usuários que utilizam o nosso app</p>
+        <div @click="createChat(item)" class="container-list-chats ac mt-5" v-for="(item, i) in items" :key='i'>
             <vs-button
                 v-if="userData._id != item._id"
                 class="display-b ac mt-2"
@@ -119,7 +114,7 @@ export default {
             let time = now.format("HH:mm")
             let date = now.format("DD/MM/YYYY")
 
-            let chatData = { source: "origin", message: "olá, mensagem enviada pela web", timestamp: date + '-' + time}
+            let chatData = [{ sender: "origin", message: "olá, mensagem enviada pela web", timestamp: date + '-' + time}]
             let body = {
                 user_origin:this.userData._id,
                 user_response:param._id,

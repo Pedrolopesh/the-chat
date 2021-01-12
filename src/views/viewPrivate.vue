@@ -2,12 +2,6 @@
     <div id="app_p">
 
         <!-- <vs-alert class="global-alert-message" dark :progress="progress" v-show="active"> -->
-        <vs-alert class="global-alert-message ac" danger :progress="progress" v-show="active">
-            <template #title>
-            Nova mensagem
-            </template>
-           Nova mensagem recebida
-        </vs-alert>
         <ToolBar/>
         <router-view/>
 
@@ -18,14 +12,18 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import ToolBar from '../components/ToolBar'
+import ToolBar from '../components/ToolBar';
+import notificationRecived from '../mixins/notifications';
+
 export default {
+    mixins: [notificationRecived],
+
     components:{
         ToolBar
     },
     data:() => ({
         progress: 0,
-        active: false,
+        active: true,
         time: 6000,
     }),
 
@@ -45,8 +43,12 @@ export default {
     
     methods: {
         ...mapActions({
-            getUserData: 'getUserData'
-        })
+            getUserData: 'getUserData',
+        }),
+
+        recivedMessage1(){
+          this.recivedMessage()
+        }
     },
     watch: {
         active(val) {
