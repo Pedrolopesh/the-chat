@@ -36,6 +36,10 @@
             <h2 class="mt-3">{{ userData.name }}</h2>    
             <h2 class="mt-3">{{ userData.email }}</h2>    
 
+                <vs-button class="ac mt-5" danger @click="tryLogout">
+                    <BIconPower class="logout-icon"/>
+                </vs-button>
+
             <!-- <span class="mt-3">{{ userData }}</span>        -->
         </div>
 
@@ -119,6 +123,17 @@ export default {
                 
                 this.selectedSourceFile = '';
             })
+        },
+
+        tryLogout(){
+            this.$vs.notification({
+            color: 'dark',
+            position: 'top-center',
+            title: 'Tchau tchau, nos vemos logo 🤩',
+          })
+          localStorage.removeItem('token');
+          localStorage.removeItem('_id');
+          this.$router.push('/Home')
         },
 
         getImageProfile(){

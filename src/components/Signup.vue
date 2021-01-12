@@ -2,7 +2,7 @@
   <div>
     <div class="center">
       
-      <vs-button size="large" class="ac" danger @click="showSignupDialog=!showSignupDialog">
+      <vs-button size="large" class="ac home-button-size" danger @click="showSignupDialog=!showSignupDialog">
         Cadastre-se
       </vs-button>
 
