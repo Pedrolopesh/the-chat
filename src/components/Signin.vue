@@ -153,7 +153,7 @@ export default {
       .catch(err => {
 
         console.log(err)
-        this.$store.commit('setApiLoading', true)
+        this.$store.commit('setApiLoading', false)
 
       })
     },

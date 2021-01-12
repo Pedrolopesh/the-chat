@@ -28,7 +28,7 @@
                 Concluir
             </vs-button>
 
-            <vs-button class="ac" @click="skip">
+            <vs-button class="ac mt-1" @click="skip">
                 Escolher depois
             </vs-button>
         

@@ -249,6 +249,15 @@ export default {
 
       createMessage(){
         this.newMessageLoading = true
+        if(this.newMessage == ''){
+          this.$vs.notification({
+            color: 'danger',
+              position: 'top-center',
+              title: 'ops! algo deu errado, parece que não há nada digitado 😋',
+          })
+          this.newMessageLoading = false
+        }else{
+
         this.checkTypeUser()
 
             // var today = new Date();
@@ -288,12 +297,13 @@ export default {
           .catch(err => {
             console.log(err)
                 this.$vs.notification({
-                    color: 'red',
+                  color: 'danger',
                     position: 'top-center',
                     title: 'ops! algo deu errado.',
                 })
           })
 
+        }
       },
 
 

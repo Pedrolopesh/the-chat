@@ -18,7 +18,7 @@
         <div class="con-form">
           <vs-input 
             class="input-outlined-primary mt-3" 
-            v-model="userData.name" 
+            v-model="userData.name"
             label-placeholder="Nome"
             primary
             state="primary"
@@ -29,7 +29,8 @@
           </vs-input>
 
           <vs-input 
-            v-model="userData.email" 
+            v-model="userData.email"
+            autocapitalize="none"
             label-placeholder="Email"
             class="mt-3"
             :class="emailInput"
@@ -100,6 +101,7 @@
             </vs-button>
 
             <vs-button
+              class="mt-1"
               block 
               @click="imageProfileOption = true"
             >
