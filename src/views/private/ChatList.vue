@@ -8,13 +8,17 @@
         </vs-button> -->
         <div>
             <!-- <ActiveChat/> -->
-            <ChatsConections/>
+            <ChatsConections :openChatProps="chatData"/>
+            <!-- <button @click="openChat = true">
+                teste teste teste neh?
+            </button> -->
         </div>
 
 
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import ActiveChat from '../../components/ActiveChat';
 import ChatsConections from '../../components/ChatsConections';
 
@@ -24,6 +28,7 @@ export default {
         ChatsConections
     },
     data:() => ({
+        chatData:''
     }),
     methods:{
         openNotification(){
@@ -36,7 +41,33 @@ export default {
             })
         },
 
+        checkRedirect(){
+           
+            let sessionChatId = JSON.parse(sessionStorage.getItem('chatId'))
+            if(this.sessionChatId !='' && this.chatCreated){
+                this.chatData = sessionChatId.doc._id
+                this.$store.commit('setChatCreated', false)
+            }
+        }
     },
+
+    computed:{
+        ...mapGetters({
+            chatId:'chatId',
+            chatCreated:'chatCreated'
+        })
+    },
+
+    created(){
+        // this.redirect()
+        // console.log("!@!@#$#%#%@#%#@%@#")
+        // console.log(this.chatCreated)
+        setTimeout(() => (this.checkRedirect()), 100)
+    },
+
+    watch:{
+   
+    }
 
 }
 </script>

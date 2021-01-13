@@ -85,6 +85,7 @@ import ChatModal from './cpmChatmodal';
 import { BIconEnvelope, BIconArrowLeftCircle } from 'bootstrap-vue';
 
 export default {
+    props:['openChatProps'],
     data:() =>({
         items:[],
         active: 0,
@@ -128,15 +129,34 @@ export default {
             console.log(param._id)
             this.propsChatData = param._id
             this.chatModalDialog = true
+        },
+
+        getChatIdAndOpenChat(){
+
+            let sessionChatId = JSON.parse(sessionStorage.getItem('chatId'))
+            
+            if(sessionChatId != ''){
+                this.propsChatData = sessionChatId.doc._id
+                this.chatModalDialog = true
+
+            }else{
+                this.propsChatData = this.chatId
+                this.chatModalDialog = true
+            }
         }
     },
     created(){
         this.checkUserData()
     },
     computed: {
+        // getRecentCreatedChatId(){
+        //     return console.log("foi?")
+        // },
+
         ...mapGetters({
             prodUrl: 'prodUrl',
-            userData:'userData'
+            userData:'userData',
+            chatId:'chatId'
         })
     },
 
@@ -147,6 +167,10 @@ export default {
             }else{
                 await this.getUserData()
             }
+        },
+
+        openChatProps(){
+            this.getChatIdAndOpenChat()
         }
     }
 }

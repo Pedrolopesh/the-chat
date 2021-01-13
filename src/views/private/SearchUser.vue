@@ -1,12 +1,12 @@
 <template>
     <div>
-        <h2 class="mt-3">TODO OS USUÁRIOS DO APP</h2>
+        <h2 class="mt-3 mb-4">TODO OS USUÁRIOS DO APP</h2>
         <p>Olá <strong> {{ userData.name }} </strong>, veja a seguir todos os usuários que utilizam o nosso app</p>
         <div v-if="items == ''">
             ainda não há usuários cadastrados 😕, compartilhe o app com seus amigos.
         </div>
 
-        <div @click="createChat(item)" class="container-list-chats ac mt-5" v-for="(item, i) in items" :key='i'>
+        <div @click="createChat(item)" class="container-list-chats ac mt-2" v-for="(item, i) in items" :key='i'>
             <vs-button
                 v-if="userData._id != item._id"
                 class="display-b ac mt-2"
@@ -26,6 +26,10 @@
 
             </vs-button>
         </div>
+
+        <button @click="testeFunc">
+            testando a função
+        </button>
 
     </div>
 </template>
@@ -53,6 +57,11 @@ export default {
         })
     },
     methods:{
+        testeFunc(){
+            console.log("foi aqui aqui")
+            this.$store.commit('setChatCreated', true)
+            this.$router.push('/ChatList')
+        },
         getAllUsers(){
             this.$store.commit('setApiLoading', true)
 
@@ -137,6 +146,11 @@ export default {
                     })
                 }else{
                     console.log(resp.data)
+                    sessionStorage.setItem('chatId', JSON.stringify(resp.data));
+                    this.$store.commit('setChatCreated', true)
+                    this.$store.commit('setChatId', resp.data)
+                    this.$router.push('/ChatList')
+
                 }
             })
             .catch(err => {
