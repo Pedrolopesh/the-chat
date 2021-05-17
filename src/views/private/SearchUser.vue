@@ -19,9 +19,9 @@
                 <BIconEnvelope class="icon-size-20"/>
                 <span class="ml-2">{{ item.name }} </span>
                 <b-avatar class="ml-2" :src='item.img_profile'></b-avatar>
-                
+
                 <template #animate >
-                    Send message 
+                    Enviar Mensagem
                 </template>
 
             </vs-button>

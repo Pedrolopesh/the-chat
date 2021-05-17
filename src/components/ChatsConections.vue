@@ -1,8 +1,5 @@
 <template>
   <div>
-      <!-- {{ items }} -->
-          
-          
         <div class="ac">
             <!-- <p>usuário logado é essse: {{ userData.email }}</p> -->
             <p>Olá <strong> {{ userData.name }} </strong>, Veja a seguir as suas conversas</p>
@@ -16,7 +13,7 @@
                 <h4 class="">Você não possui mensagens ainda, tente ir até a seção de usuários para iniciar uma nova conversa.</h4>
             </div>
         </div>
-    
+
     <div v-if="!chatModalDialog && items != '' ">
 
         <div class="" v-for="(item ,index) in items" :key="index">
@@ -31,14 +28,14 @@
             >
                 <BIconEnvelope class="icon-size-20"/>
                 <span class="ml-2"> {{ item.user_response[0].name }} </span>
-                <b-avatar 
-                    v-if="item.user_response[0].img_profile != '' " 
-                    class="ml-2" 
+                <b-avatar
+                    v-if="item.user_response[0].img_profile != '' "
+                    class="ml-2"
                     :src='item.user_response[0].img_profile'
                 ></b-avatar>
-                
+
                 <template #animate >
-                    Send message
+                    Enviar Mensagem
                 </template>
             </vs-button>
 
@@ -53,13 +50,13 @@
             >
                 <BIconEnvelope class="icon-size-20"/>
                 <span class="ml-2"> {{ item.user_origin[0].name }} </span>
-                <b-avatar 
+                <b-avatar
                     v-if="item.user_origin[0].img_profile != '' "
                     class="ml-2" :src='item.user_origin[0].img_profile'
                 ></b-avatar>
-                
+
                 <template #animate >
-                    Send message 
+                    Enviar Mensagem
                 </template>
             </vs-button>
 
@@ -67,11 +64,11 @@
 
       </div>
 
-        <div v-if="chatModalDialog">
+        <div v-if="chatModalDialog" class="chat-messages-container">
             <BIconArrowLeftCircle class="display-b mr-a ml-3 icon-back mb-3" @click="chatModalDialog = false"/>
             <ChatModal :chatId="propsChatData"/>
         </div>
-        
+
             <!-- <vs-dialog prevent-close :loading="false" v-model="chatModalDialog">
                 <ChatModal :chatId="propsChatData"/>
             </vs-dialog> -->
@@ -134,7 +131,7 @@ export default {
         getChatIdAndOpenChat(){
 
             let sessionChatId = JSON.parse(sessionStorage.getItem('chatId'))
-            
+
             if(sessionChatId != ''){
                 this.propsChatData = sessionChatId.doc._id
                 this.chatModalDialog = true
@@ -177,6 +174,18 @@ export default {
 </script>
 
 <style lang="scss">
+    .chat-messages-container{
+        max-width: 40%;
+        width: 100%;
+
+        @media screen and (max-width: 700px) {
+            max-width: 100%;
+        }
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .container-alert{
         max-width: 70%;
         width: 100%;

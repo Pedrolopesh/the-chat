@@ -7,11 +7,7 @@
             Open Notification
         </vs-button> -->
         <div>
-            <!-- <ActiveChat/> -->
             <ChatsConections :openChatProps="chatData"/>
-            <!-- <button @click="openChat = true">
-                teste teste teste neh?
-            </button> -->
         </div>
 
 

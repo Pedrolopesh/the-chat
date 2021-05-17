@@ -6,13 +6,13 @@
         <div class="ac chat-container">
 
             <!-- <perfect-scrollbar> -->
-          <div id="container-chat" v-if="chatMessages != ''" class="chat-content"> 
+          <div id="container-chat" v-if="chatMessages != ''" class="chat-content">
 
 
             <div v-for="(messageObj, i) in chatMessages" :key="i" class="">
               <div class="message-block">
                 <div v-if="messageObj.sender == 'origin'">
-                    <div 
+                    <div
                       class="container-message p10"
                       :class="[userData.name == chatOrigin.user_origin.name ?'flex-reverse' : '']"
                       >
@@ -22,10 +22,6 @@
                       <!-- <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatOrigin.user_origin.name }} </span> -->
                       <span class="display-b alg-txt-s chip-black ml-2 mr-2 mt-3"> {{ messageObj.message }} </span>
                     </div>
-                    
-                    
-                    
-                    
                     <!-- <div v-if="chatOrigin.user_origin.img_profile != '' ">
                           <b-avatar :src='chatOrigin.user_origin.img_profile' class="mr-a display-b mt-3"></b-avatar>
                         </div> -->
@@ -38,7 +34,7 @@
                       <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatOrigin.user_origin.name }} </span>
                       <span class="display-b alg-txt-s"> <strong>mensagem:</strong> {{ messageObj.message }} </span>
                       <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small> -->
-                </div> 
+                </div>
 
                 <div v-else>
                   <div

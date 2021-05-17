@@ -34,6 +34,13 @@ const routes = [
         }
       },
       {
+        path: '/ChatList1',
+        name: 'ChatList1',
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/private/ChatList/ChatList.vue')
+        }
+      },
+      {
         path: '/Introduction',
         name: 'Introduction',
         component: function () {

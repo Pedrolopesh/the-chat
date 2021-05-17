@@ -38,34 +38,34 @@
 
 .chat-container{
     display: block;
-    max-width: 40%;
+    max-width: 100%;
     width: 100%;
-    
+
     @media screen and (max-width: 700px){
         max-width: 100%;
     }
-    
+
     .header-container-chat{
         display: flex;
         padding: 10px;
         background-color: #d90009;
         border-radius: 10px 10px 0px 0px;
-        
+
     }
-    
+
     .body-container-chat{
         display: block;
         padding: 10px;
         background-color: rgb(255, 255, 255);
     }
-    
+
     .text-box-chat{
         display: block;
         padding: 10px;
         // background-color: rgb(240, 240, 240);
         border-radius: 10px;
         border: 0.1px solid rgba(187, 187, 187, 0.267);
-        
+
         .text-input-chat{
             display: block;
             background-color: transparent;
@@ -76,12 +76,12 @@
             max-width: 100%;
             width: 100%;
         }
-        
+
         .send-message-icon{
             font-size: 30px;
         }
     }
-    
+
     .message-sended-box{
         display: block;
         max-width: 50%;
@@ -90,7 +90,7 @@
         background-color: #ff3742;
         padding: 10px;
     }
-    
+
     .message-send-box{
         display: block;
         max-width: 50%;
