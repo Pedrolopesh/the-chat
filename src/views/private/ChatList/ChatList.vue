@@ -3,22 +3,25 @@
         <h1 class="mt-3">SUAS CONVERSAS</h1>
 
         <div class="container-chatlist">
-            <div class="container-chats" v-if="chatItems !== '' ">
+            <div class="container-chats" v-if="chatItems.items !== '' ">
                 <div v-for="(item ,i) in chatItems" :key="i" class="contact-message">
-                    <div class="container-contact-info" v-if="userData._id !== item.user_response">
+                    <button @click="selectedChatId = item.chatInfo._id , selectedUserName = item.userData" class="container-contact-info">
                         <div class="mr-4">
-                            <Avatar :img_profile="item[i].img_profile" />
+                            <Avatar :img_profile="item.userData.img_profile" />
                         </div>
                         <span class="clr-white">
-                            {{ item[i].name }}
+                            {{ item.userData.name }}
                         </span>
-                    </div>
+                    </button>
                 </div>
             </div>
 
             <div class="container-messagens">
-                <div>
+                <div v-if="!selectedChatId">
                     Suas mensagens estrão aqui
+                </div>
+                <div v-else>
+                    <ChatModal :chatId="selectedChatId" :reciverUserName="selectedUserName" />
                 </div>
             </div>
         </div>
@@ -28,14 +31,11 @@
 <script>
 import Avatar from '../../../components/Avatar/Avatar'
 import { mapActions, mapGetters } from 'vuex';
-
+import ChatModal from '../../../components/cpmChatmodal';
 export default {
-    components: {
-        Avatar
-    },
+    components: { Avatar, ChatModal },
 
     computed: {
-
         ...mapGetters({
             userData:'userData',
             chatId:'chatId'
@@ -44,7 +44,9 @@ export default {
 
     data:() => ({
         propsImageSrc: '',
-        chatItems: ''
+        chatItems: '',
+        selectedChatId: '',
+        selectedUserName: '',
     }),
 
     methods: {
@@ -59,23 +61,35 @@ export default {
                 return this.getUserData()
             }
             const respChatItems = await this.$http.get(this.$url + `/chats/userid/${userId._id}`).catch(err => { console.log(err) })
-            // this.chatItems = respChatItems.data
-            this.formatChatMessages(respChatItems.data)
+            let formatedItens = [...respChatItems.data.user_response_mesage, ...respChatItems.data.user_origin_message]
+            this.formatChatMessages(formatedItens)
         },
 
         formatChatMessages(chatItemsParam) {
-            console.log("LOGED USER IS =>", this.userData)
+            // console.log("LOGED USER IS =>", chatItemsParam)
             const allChatItens = chatItemsParam
+            console.log("ALL DATA =>", allChatItens)
             let newChatItens = []
             for (let i in allChatItens) {
                 if (this.userData._id === allChatItens[i].user_response[0]._id) {
-                    newChatItens.push(allChatItens[i].user_origin)
+                    newChatItens.push({
+                        userData: allChatItens[i].user_origin[0],
+                        chatInfo: allChatItens[i]
+                    })
                 }
                 if (this.userData._id === allChatItens[i].user_origin[0]._id) {
-                    newChatItens.push(allChatItens[i].user_response)
+                    newChatItens.push({
+                        userData: allChatItens[i].user_response[0],
+                        chatInfo: allChatItens[i]
+                    })
                 }
             }
+            console.log("DATA =>", newChatItens)
             this.chatItems = newChatItens
+        },
+
+        selectedChatConnection(item) {
+            console.info(item.chatInfo._id)
         }
     },
 
