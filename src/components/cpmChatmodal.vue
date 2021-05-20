@@ -20,7 +20,7 @@
                           <b-avatar :src='chatOrigin.user_origin.img_profile' class="mr-a display-b mt-3"></b-avatar>
                         </div>
                       <!-- <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatOrigin.user_origin.name }} </span> -->
-                      <span class="display-b alg-txt-s chip-black ml-2 mr-2 mt-3"> {{ messageObj.message }} </span>
+                      <span class="display-b alg-txt-s chip-pink ml-2 mr-2 mt-3"> {{ messageObj.message }} </span>
                     </div>
 
                 </div>
@@ -36,7 +36,7 @@
                   <div v-if="chatResponder.user_response.img_profile != '' ">
                     <b-avatar :src='chatResponder.user_response.img_profile' class="mr-a display-b mt-3"></b-avatar>
                   </div>
-                  <span class="display-b alg-txt-s chip-black ml-2 mr-2 mt-3">{{ messageObj.message }} </span>
+                  <span class="display-b alg-txt-s chip-pink ml-2 mr-2 mt-3">{{ messageObj.message }} </span>
 
                   <!-- <span class="display-b alg-txt-s"> <strong>Usuário:</strong> {{ chatResponder.user_response.name }} </span> -->
                   <!-- <small class="display-b alg-txt-s">{{ messageObj.timestamp }}</small> -->
