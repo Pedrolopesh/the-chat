@@ -3,7 +3,7 @@
 
     <div>
       <span v-html="Svgs.logo" class="home-icon ac"></span>
-      <h1 class="font-logo mt-3">The Chat</h1>
+      <h1 class="font-logo font-size-logo mt-3">The Chat</h1>
     </div>
 
     <div class="container ac mt-8">
@@ -50,9 +50,7 @@ export default {
     }
   }
 
-  .font-logo{
+  .font-size-logo{
     font-size: 50px;
-    color: #e38622;
-    font-family: 'Bungee Shade', cursive;
   }
 </style>

@@ -2,7 +2,7 @@
     <div id="app_p">
 
         <!-- <vs-alert class="global-alert-message" dark :progress="progress" v-show="active"> -->
-        <ToolBar/>
+        <ToolsBar/>
         <router-view/>
 
         <!-- <vs-button @click="active=true">
@@ -13,13 +13,14 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import ToolBar from '../components/ToolBar';
+import ToolsBar from '../components/ToolsBar/ToolsBar';
 import notificationRecived from '../mixins/notifications';
 
 export default {
     mixins: [notificationRecived],
 
     components:{
-        ToolBar
+        ToolsBar, ToolBar
     },
     data:() => ({
         progress: 0,

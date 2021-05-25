@@ -1,8 +1,22 @@
 <template>
     <div>
-        <h1 class="mt-3">SUAS CONVERSAS</h1>
+        <div v-if="chatItems.length === 0 ">
+            <h2>Você ainda não Possue Mensagens com nenhum usuário</h2>
+            <h4>Navegue até a aba de usuário e adicione amigos para conversar</h4>
 
-        <div class="container-chatlist">
+            <vs-button
+                class="display-b ac mt-5"
+                size="large"
+                gradient
+                warn
+                animation-type="scale"
+                to="/SearchUser"
+            >
+                Adicionar amigos
+            </vs-button>
+        </div>
+
+        <div v-else class="container-chatlist">
             <div class="container-chats" v-if="chatItems.items !== '' ">
                 <div v-for="(item ,i) in chatItems" :key="i" class="contact-message">
                     <button
@@ -29,6 +43,9 @@
                 </div>
             </div>
         </div>
+
+
+        <Loading />
     </div>
 </template>
 
@@ -115,14 +132,13 @@ export default {
         display: flex;
         max-width: 100%;
         width: 100%;
-        justify-content: center;
-        min-height: 685px;
     }
 
     .container-chats{
         display: block;
         background: #ffc5c5;
-        border-radius: 10px 10px 0px 10px;
+        border-radius: 0px 10px 0px 0px;
+        min-height: 95.8vh;
 
         .contact-message{
             display: block;
@@ -135,10 +151,11 @@ export default {
             .container-contact-info{
                 display: flex;
                 max-width: 100%;
-                width: 250px;
+                width: 335px;
                 background: #ffc5c5;
                 padding: 10px;
                 border: none;
+                border-radius: 10px;
 
                 span {
                     font-size: 20px;
@@ -152,14 +169,14 @@ export default {
         display: block;
         text-align: center;
         max-width: 100%;
-        width: 50%;
+        width: 70%;
     }
 
     .select-contact-message {
         transition: 1s;
         background-color: #ff9f9f !important;
-        border: 1px solid rgb(189, 189, 189) !important;
+        border: 1px solid #ffffff !important;
         border-radius: 10px !important;
-        box-shadow: -10px 6px 15px rgb(0 0 0 / 36%) !important;
+        box-shadow: -10px 6px 15px rgb(0 0 0 / 20%) !important;
     }
 </style>

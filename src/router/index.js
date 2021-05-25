@@ -30,7 +30,7 @@ const routes = [
         path: '/ChatList',
         name: 'ChatList',
         component: function () {
-          return import(/* webpackChunkName: "about" */ '../views/private/ChatList.vue')
+          return import(/* webpackChunkName: "about" */ '../views/private/ChatList/ChatList.vue')
         }
       },
       {
