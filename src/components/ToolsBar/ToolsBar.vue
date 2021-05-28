@@ -32,12 +32,16 @@
                 Iniciar Nova <b>Conversa</b>
             </h4>
             <div>
-                <NewChatModal />
+                <NewChatModal @selectedUser="changeButtonState"/>
             </div>
             <template #footer>
                 <div class="footer-dialog">
                     <div class="new">
-                        <button>
+                        <button
+                            class="submitValue"
+                            :disabled="addDisable"
+                            :class="addDisable ? 'disableSubmit' : 'enableSubmit' "
+                        >
                             Adicionar
                         </button>
                     </div>
@@ -59,8 +63,19 @@ export default {
 
     data:() => ({
         Svgs: Svgs,
-        newChat: true
-    })
+        newChat: true,
+        addDisable: true,
+    }),
+
+
+    methods : {
+        changeButtonState(selectedParam) {
+            console.log("ESTADO :", selectedParam)
+            if (selectedParam) this.addDisable = false
+        }
+    }
+
+
 }
 </script>
 
@@ -82,5 +97,23 @@ export default {
 
 .center{
     margin: auto;
+}
+
+.submitValue{
+    display: block;
+    border: none;
+    font-size: 13px;
+    border-radius: 7px;
+    color: white;
+    padding: 10px;
+    background-color: #ffbbbb;
+}
+
+.disableSubmit{
+    background-color: #d6d6d6;
+}
+
+.enableSubmit{
+    box-shadow: -10px 6px 15px rgb(0 0 0 / 20%) !important;
 }
 </style>

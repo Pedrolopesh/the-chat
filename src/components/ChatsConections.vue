@@ -66,7 +66,7 @@
 
         <div v-if="chatModalDialog" class="chat-messages-container">
             <BIconArrowLeftCircle class="display-b mr-a ml-3 icon-back mb-3" @click="chatModalDialog = false"/>
-            <ChatModal :chatId="propsChatData"/>
+            <ChatModal :chatId="propsChatData" />
         </div>
 
             <!-- <vs-dialog prevent-close :loading="false" v-model="chatModalDialog">

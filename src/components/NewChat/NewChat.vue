@@ -3,6 +3,7 @@
 
         <div class="d-flex" v-for="(items, index) in items" :key="index">
             <button
+                :class="activeSelected ? 'activeSelected' : 'notSelected' "
                 class="mt-2 button-contact"
                 :active="active == 0"
                 @click="tryCreateChat(items)"
@@ -30,6 +31,7 @@ export default {
 
     data:() => ({
         active:true,
+        activeSelected: false,
         items: '',
         userData: ''
     }),
@@ -62,6 +64,8 @@ export default {
 
         tryCreateChat(param) {
             console.info(param)
+            this.activeSelected = true
+            this.$emit('selectedUser', true)
         }
     },
 
@@ -96,5 +100,18 @@ export default {
     &:not(:hover){
         transition: 0.7s;
     }
+}
+
+.activeSelected {
+    transition: 0.7s;
+    border-radius: 10px;
+    background-color: #ffe2e2 !important;
+    box-shadow: -10px 6px 15px rgb(0 0 0 / 20%) !important;
+}
+
+.notSelected {
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
 }
 </style>
