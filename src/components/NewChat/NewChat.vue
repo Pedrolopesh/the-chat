@@ -3,10 +3,10 @@
 
         <div class="d-flex" v-for="(items, index) in items" :key="index">
             <button
-                :class="activeSelected ? 'activeSelected' : 'notSelected' "
+                :class="activeSelected === index ? 'activeSelected' : 'notSelected' "
                 class="mt-2 button-contact"
                 :active="active == 0"
-                @click="tryCreateChat(items)"
+                @click="tryCreateChat(items, index)"
             >
                 <b-avatar
                     v-if="items.img_profile != '' "
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import { BIconEnvelope } from 'bootstrap-vue';
 
 export default {
@@ -62,10 +62,9 @@ export default {
             this.items = filterArray
         },
 
-        tryCreateChat(param) {
-            console.info(param)
-            this.activeSelected = true
-            this.$emit('selectedUser', true)
+        tryCreateChat(param, index) {
+            this.activeSelected = index
+            this.$emit('selectedUser', param)
         }
     },
 

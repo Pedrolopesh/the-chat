@@ -18,6 +18,9 @@
 
         <div v-else class="container-chatlist">
             <div class="container-chats" v-if="chatItems.items !== '' ">
+
+                <SearchPersonInput />
+
                 <div v-for="(item ,i) in chatItems" :key="i" class="contact-message">
                     <button
                         :class="selectedChatId === item.chatInfo._id ? 'select-contact-message' : '' "
@@ -53,13 +56,15 @@
 import Avatar from '../../../components/Avatar/Avatar'
 import { mapActions, mapGetters } from 'vuex';
 import ChatModal from '../../../components/cpmChatmodal';
+import SearchPersonInput from '../../../components/SearchPersonInput/SearchPersonInput'
+
 export default {
-    components: { Avatar, ChatModal },
+    components: { Avatar, ChatModal, SearchPersonInput },
 
     computed: {
         ...mapGetters({
             userData:'userData',
-            chatId:'chatId'
+            chatId:'chatId',
         })
     },
 
@@ -121,7 +126,7 @@ export default {
     watch: {
         userData() {
             this.listChatConections()
-        }
+        },
     }
 
 }

@@ -2,6 +2,10 @@
 @import './forms-style.scss';
 @import './chatStyle.scss';
 
+:root {
+    --vs-pink: 255, 191, 238;
+}
+
 button, input{
     &:focus {outline:0 !important;}
 }

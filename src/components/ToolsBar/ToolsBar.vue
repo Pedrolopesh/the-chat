@@ -2,14 +2,8 @@
     <div>
 
         <div class="container-toolsbar">
-            <div class="container-logo">
-                <span v-html="Svgs.logo" class="icon-header-toolbar center mr-2"></span>
-                <span class="font-logo center">the chat </span>
-                <span class="center ml-4 mr-4">|</span>
-            </div>
-
             <div>
-                <vs-button gradient style="min-width: 50px" color="rgb(59,222,200)" animation-type="scale">
+                <vs-button to="/ChatList" gradient style="min-width: 50px" color="rgb(59,222,200)" animation-type="scale">
                     <BIconPeopleFill class="icon-size-15"/>
                 </vs-button>
             </div>
@@ -21,9 +15,20 @@
             </div>
 
             <div>
-                <vs-button gradient style="min-width: 50px" animation-type="scale">
+                <vs-button to="/Profile" gradient style="min-width: 50px" animation-type="scale">
                     <BIconGearWideConnected class="icon-size-15"/>
                 </vs-button>
+            </div>
+
+            <div>
+                <vs-button @click="openModalNewChat()" gradient style="min-width: 50px" animation-type="scale" success>
+                    <BIconPlusCircleFill class="icon-size-15"/>
+                </vs-button>
+            </div>
+
+            <div class="container-logo ml-a">
+                <span v-html="Svgs.logo" class="icon-header-toolbar center mr-2"></span>
+                <span class="font-logo center">the chat </span>
             </div>
         </div>
 
@@ -52,13 +57,22 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Svgs from  '../../assets/svg'
-import { BIconBellFill, BIconPeopleFill, BIconGearWideConnected } from 'bootstrap-vue';
+import { BIconBellFill, BIconPeopleFill, BIconGearWideConnected, BIconPlusCircleFill } from 'bootstrap-vue';
 import NewChatModal from '../NewChat/NewChat.vue'
 export default {
 
     components:{
-        BIconBellFill, BIconPeopleFill, BIconGearWideConnected, NewChatModal
+        BIconBellFill, BIconPeopleFill,
+        BIconGearWideConnected, BIconPlusCircleFill,
+        NewChatModal
+    },
+
+    computed: {
+        ...mapGetters({
+            newChatModal:'newChatModal',
+        })
     },
 
     data:() => ({
@@ -70,9 +84,20 @@ export default {
 
     methods : {
         changeButtonState(selectedParam) {
-            console.log("ESTADO :", selectedParam)
             if (selectedParam) this.addDisable = false
+        },
+
+        openModalNewChat() {
+            console.log('setNewChatModal', this.newChatModal)
+            this.$store.commit('setNewChatModal', true)
         }
+    },
+
+    watch: {
+        newChatModal() {
+            console.log('NEW STATE', this.newChatModal)
+            this.newChat = this.newChatModal
+        },
     }
 
 

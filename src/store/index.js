@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { axios } from '../main';
 import UserListVuex from './modules/UserListVuex';
+import ToolbarVuex from './modules/ToolbarVuex';
 
 Vue.use(Vuex)
 
@@ -41,6 +42,7 @@ export default new Vuex.Store({
     },
   },
   modules: {
-    UserListVuex
+    UserListVuex,
+    ToolbarVuex
   }
 })

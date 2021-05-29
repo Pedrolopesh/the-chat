@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="center">
-      
+
       <vs-button size="large" class="ac home-button-size" danger @click="showSignupDialog=!showSignupDialog">
         Cadastre-se
       </vs-button>
@@ -16,8 +16,8 @@
         </template>
 
         <div class="con-form">
-          <vs-input 
-            class="input-outlined-primary mt-3" 
+          <vs-input
+            class="input-outlined-primary mt-3"
             v-model="userData.name"
             label-placeholder="Nome"
             primary
@@ -28,7 +28,7 @@
             </template>
           </vs-input>
 
-          <vs-input 
+          <vs-input
             v-model="userData.email"
             autocapitalize="none"
             label-placeholder="Email"
@@ -94,7 +94,7 @@
         <template>
           <div class="footer-dialog">
             <vs-button
-              block 
+              block
               @click="trySignup"
             >
               Cadastre-se
@@ -102,7 +102,7 @@
 
             <vs-button
               class="mt-1"
-              block 
+              block
               @click="imageProfileOption = true"
             >
               Escolher avatar
@@ -113,7 +113,7 @@
             </div>
           </div>
         </template>
-        
+
         </div>
 
         <div v-else>
@@ -185,7 +185,7 @@ export default {
         console.log(resp)
         if(resp.data.success == true && resp.data.message != "User Alredy exist"){
           console.log("sucesso")
-          
+
           this.$vs.notification({
             color: 'success',
               position: 'top-center',
@@ -196,7 +196,7 @@ export default {
 
           this.$store.commit('setApiLoading', false)
           this.imageProfileOption = true
-        
+
         }else if(resp.data.success == false && resp.data.message == "User Alredy exist"){
           console.log("erro")
           this.emailInput = 'input-outlined-red'
@@ -257,7 +257,6 @@ export default {
     ...mapGetters({
       prodUrl: 'prodUrl',
       apiLoading:'apiLoading',
-
     })
   },
 
