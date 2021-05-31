@@ -6,7 +6,7 @@
                 :class="activeSelected === index ? 'activeSelected' : 'notSelected' "
                 class="mt-2 button-contact"
                 :active="active == 0"
-                @click="tryCreateChat(items, index)"
+                @click="selectedUserOption(items, index)"
             >
                 <b-avatar
                     v-if="items.img_profile != '' "
@@ -17,12 +17,28 @@
             </button>
         </div>
 
+        <div>
+            <div class="footer-dialog">
+                <div class="new">
+                    <button
+                        @click="tryCreateChat()"
+                        class="submitValue"
+                        :disabled="addDisable"
+                        :class="addDisable ? 'disableSubmit' : 'enableSubmit' "
+                    >
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import { BIconEnvelope } from 'bootstrap-vue';
+import dayjs from 'dayjs';
 
 export default {
     components: {
@@ -32,13 +48,16 @@ export default {
     data:() => ({
         active:true,
         activeSelected: false,
+        addDisable: false,
         items: '',
-        userData: ''
+        userData: '',
+        selectedUserChat:'',
     }),
 
     computed:{
         ...mapGetters({
             apiLoading:'apiLoading',
+            userDataVuex:'userData',
         })
     },
 
@@ -62,9 +81,44 @@ export default {
             this.items = filterArray
         },
 
-        tryCreateChat(param, index) {
+        selectedUserOption(param, index) {
             this.activeSelected = index
+            this.selectedUserChat = param
             this.$emit('selectedUser', param)
+        },
+
+        tryCreateChat() {
+            var now = dayjs()
+            let time = now.format("HH:mm")
+            let date = now.format("DD/MM/YYYY")
+
+            let chatData = [{ sender: "origin", message: "olá", timestamp: date + '-' + time}]
+            let body = {
+                user_origin:this.userDataVuex._id,
+                user_response:this.selectedUserChat._id,
+                chatData:chatData
+            }
+
+            this.$http.post(this.$url + '/create/chat', body)
+            .then(resp =>{
+                console.log(resp)
+                if(resp.data.error == 'Alredy have a chat'){
+                    console.log(resp.data.message._id)
+                    this.$vs.notification({
+                        color: 'danger',
+                        position: 'top-center',
+                        title: 'você já possui uma conversa com esse usuário. vá em conversas 😓',
+                    })
+                }else{
+                    console.log(resp.data)
+                    sessionStorage.setItem('chatId', JSON.stringify(resp.data));
+                    this.$store.commit('setChatCreated', true)
+                    this.$store.commit('setChatId', resp.data)
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
         }
     },
 

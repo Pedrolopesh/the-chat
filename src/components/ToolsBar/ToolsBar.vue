@@ -21,7 +21,7 @@
             </div>
 
             <div>
-                <vs-button @click="openModalNewChat()" gradient style="min-width: 50px" animation-type="scale" success>
+                <vs-button @click="newChat = !newChat" gradient style="min-width: 50px" animation-type="scale" success>
                     <BIconPlusCircleFill class="icon-size-15"/>
                 </vs-button>
             </div>
@@ -39,19 +39,6 @@
             <div>
                 <NewChatModal @selectedUser="changeButtonState"/>
             </div>
-            <template #footer>
-                <div class="footer-dialog">
-                    <div class="new">
-                        <button
-                            class="submitValue"
-                            :disabled="addDisable"
-                            :class="addDisable ? 'disableSubmit' : 'enableSubmit' "
-                        >
-                            Adicionar
-                        </button>
-                    </div>
-                </div>
-            </template>
         </vs-dialog>
     </div>
 </template>
@@ -77,7 +64,7 @@ export default {
 
     data:() => ({
         Svgs: Svgs,
-        newChat: true,
+        newChat: false,
         addDisable: true,
     }),
 
@@ -88,18 +75,9 @@ export default {
         },
 
         openModalNewChat() {
-            console.log('setNewChatModal', this.newChatModal)
-            this.$store.commit('setNewChatModal', true)
+            this.newChat = true;
         }
     },
-
-    watch: {
-        newChatModal() {
-            console.log('NEW STATE', this.newChatModal)
-            this.newChat = this.newChatModal
-        },
-    }
-
 
 }
 </script>
