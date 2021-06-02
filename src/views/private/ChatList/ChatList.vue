@@ -65,6 +65,7 @@ export default {
         ...mapGetters({
             userData:'userData',
             chatId:'chatId',
+            chatCreated:'chatCreated',
         })
     },
 
@@ -77,7 +78,7 @@ export default {
 
     methods: {
         ...mapActions({
-            getUserData: 'getUserData'
+            getUserData: 'getUserData',
         }),
 
         async listChatConections(){
@@ -127,6 +128,13 @@ export default {
         userData() {
             this.listChatConections()
         },
+        
+        chatCreated() {
+            if(this.chatCreated) {
+                console.log("VALOR MUDOU VALOR MUDOU")
+                this.listChatConections()
+            }
+        }
     }
 
 }
@@ -145,6 +153,10 @@ export default {
         border-radius: 0px 10px 0px 0px;
         min-height: 95.8vh;
 
+        @media screen and (max-width: 1700) {        
+            min-height: 90.8vh;
+        }
+
         .contact-message{
             display: block;
             margin-top: 20px;
@@ -154,6 +166,7 @@ export default {
             }
 
             .container-contact-info{
+                margin: 0px 15px 0px 5px;
                 display: flex;
                 max-width: 100%;
                 width: 335px;

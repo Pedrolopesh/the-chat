@@ -2,18 +2,9 @@
     <div>
 
         <div class="mt-3 container-input-search">
-            <vs-button
-                gradient
-                icon
-                color="success"
-                animation-type="scale"
-                size="xl"
-                class="ml-2 mr-2 button-newChat"
-            >
-                <BIconPlusCircleFill />
-            </vs-button>
 
           <vs-input
+            class="inputSearch"
             type="password"
             :class=" 'input-outlined-pink icon-search' "
             :color=" 'input-outlined-pink' "
@@ -76,5 +67,10 @@ export default {
 
     .icon-color-pink{
         color: #ff9a9a;
+    }
+
+    .inputSearch {
+        width: 100%;
+        margin: 0px 10px 0px 10px;
     }
 </style>
