@@ -112,8 +112,14 @@ export default {
                 }else{
                     console.log(resp.data)
                     sessionStorage.setItem('chatId', JSON.stringify(resp.data));
+                    this.$vs.notification({
+                        color: 'success',
+                        position: 'top-center',
+                        title: 'Nova conversa adicionada com sucesso, 👏',
+                    })
                     this.$store.commit('setChatCreated', true)
                     this.$store.commit('setChatId', resp.data)
+                    this.$emit('closeNewChatModal', false)
                 }
             })
             .catch(err => {

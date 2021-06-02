@@ -37,7 +37,7 @@
                 Iniciar Nova <b>Conversa</b>
             </h4>
             <div>
-                <NewChatModal @selectedUser="changeButtonState"/>
+                <NewChatModal @selectedUser="changeButtonState" @closeNewChatModal="closeModalNewChat"/>
             </div>
         </vs-dialog>
     </div>
@@ -76,7 +76,11 @@ export default {
 
         openModalNewChat() {
             this.newChat = true;
-        }
+        },
+
+        closeModalNewChat() {
+            this.newChat = false;
+        },
     },
 
 }
