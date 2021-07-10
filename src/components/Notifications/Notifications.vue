@@ -7,11 +7,18 @@
 
 <script>
 export default {
-    data: () => ({}),
+    data: () => ({
+
+    }),
+
+    computed:{
+      ...mapGetters({
+        userData: 'userData',
+      }),
+    },
 
     methods: {
       async pushRegister(){
-        console.log('FOI AQUI')
         const vapidPublicKey = "BBm-WpaMA52nM8uvH1gCeyoHvDrSrV6O8xsozro_uGant31hJeAZkDcc2lQagDB0n5VAGQQ4UWzpTVkP7QXbr_4"
         const convertedVapidKey = this.urlBase64ToUint8Array(vapidPublicKey);
 
@@ -19,7 +26,11 @@ export default {
           reg.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: convertedVapidKey
-          }).then(async (body) => {
+          }).then(async (subData) => {
+            let body = {
+              user_id: this.userData._id,
+              subscribeData: subData
+            }
             const resp = await this.$http.post(this.$url + '/subscribe', body )
             console.log('RESP', resp)
           })
