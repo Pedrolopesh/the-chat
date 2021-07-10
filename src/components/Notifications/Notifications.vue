@@ -1,7 +1,7 @@
 <template>
   <div>
       <h1> Notificações </h1>
-      <button @click="checkServiceWorker"> ativar notificações </button>
+      <button @click="pushRegister()"> ativar notificações </button>
   </div>
 </template>
 
@@ -12,6 +12,25 @@ export default {
     }),
 
     methods: {
+      async pushRegister(){
+        console.log('FOI AQUI')
+        const vapidPublicKey = "BBm-WpaMA52nM8uvH1gCeyoHvDrSrV6O8xsozro_uGant31hJeAZkDcc2lQagDB0n5VAGQQ4UWzpTVkP7QXbr_4"
+        const convertedVapidKey = this.urlBase64ToUint8Array(vapidPublicKey);
+
+        console.log('CHEGOU NA FUNC DO SERVICE')
+        navigator.serviceWorker.getRegistration().then(reg => {
+          console.log('AGORA VEM O PUSH')
+          reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: convertedVapidKey
+          }).then(async (body) => {
+            console.log('DEU CERTO ?')
+            const resp = await this.$http.post(this.$url + '/subscribe', body )
+            console.log('RESP', resp)
+          })
+        })
+      },
+
       checkServiceWorker() {
         if ('serviceWorker' in navigator) {
           this.send().catch(err => { console.log(err) })
