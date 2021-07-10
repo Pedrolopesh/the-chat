@@ -9,7 +9,7 @@
             </div> -->
 
             <div>
-                <vs-button gradient style="min-width: 50px" warn animation-type="scale">
+                <vs-button @click="notificationConfig = !notificationConfig" gradient style="min-width: 50px" warn animation-type="scale">
                     <BIconBellFill class="icon-size-15"/>
                 </vs-button>
             </div>
@@ -38,14 +38,38 @@
             </div>
         </div>
 
+        <!-- NOTIFICATIONS -->
+        <vs-dialog prevent-close blur v-model="notificationConfig">
+            <h4 class="not-margin">
+                ]<b>Notificações</b>
+            </h4>
+            <div>
+                <Notifications @closeNoficationsModal="closeModalNotifications"/>
+            </div>
+        </vs-dialog>
+        <!-- NOTIFICATIONS -->
+
+        <!-- ACCOUNT CONFIG -->
+        <vs-dialog prevent-close blur v-model="configProfile">
+            <h4 class="not-margin">
+                Configurações de <b>Conta</b>
+            </h4>
+            <div>
+                <ProfileConfigData />
+            </div>
+        </vs-dialog>
+        <!-- ACCOUNT CONFIG -->
+
+        <!-- NEW CHAT -->
         <vs-dialog prevent-close blur v-model="newChat">
             <h4 class="not-margin">
-                Iniciar Nova <b>Conversa</b>
+                Iniciar Nova <b>conversa</b>
             </h4>
             <div>
                 <NewChatModal @selectedUser="changeButtonState" @closeNewChatModal="closeModalNewChat"/>
             </div>
         </vs-dialog>
+        <!-- NEW CHAT -->
 
         <vs-dialog prevent-close blur v-model="configProfile">
             <h4 class="not-margin">
@@ -83,6 +107,7 @@ export default {
         newChat: false,
         configProfile: false,
         addDisable: true,
+        notificationConfig: true,
     }),
 
 
@@ -99,15 +124,19 @@ export default {
             this.newChat = false;
         },
 
+        closeModalNotifications() {
+            this.notificationConfig = false;
+        },
+
         tryLogout(){
             this.$vs.notification({
             color: 'dark',
             position: 'top-center',
             title: 'Tchau tchau, nos vemos logo 🤩',
-          })
-          localStorage.removeItem('token');
-          localStorage.removeItem('_id');
-          this.$router.push('/Home')
+            })
+            localStorage.removeItem('token');
+            localStorage.removeItem('_id');
+            this.$router.push('/Home')
         },
     },
 
