@@ -61,9 +61,5 @@ export default {
         setTimeout(() => (this.checkRedirect()), 100)
     },
 
-    watch:{
-   
-    }
-
 }
 </script>

@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="center">
-      
+
       <vs-button size="large" class="ac mt-2 home-button-size" color="rgb(59,222,200)" @click="showSignupDialog=!showSignupDialog">
         Signin
       </vs-button>
 
 
       <vs-dialog prevent-close :loading="apiLoading" v-model="showSignupDialog">
-        
+
         <template #header>
           <h4 class="not-margin">
             Bem vindo ao<b class="font-modal-logo"> the chat</b>
@@ -17,9 +17,9 @@
 
         <div class="con-form">
 
-            <vs-input 
-                class="input-outlined-primary" 
-                v-model="userData.email" 
+            <vs-input
+                class="input-outlined-primary"
+                v-model="userData.email"
                 label-placeholder="Email"
                 primary
                 state="primary"
@@ -53,13 +53,11 @@
 
             </vs-input>
 
-
-            
           <div class="flex">
             <p class="alg-txt-s mb-0 mt-3">Savar Login?</p>
             <vs-switch class="switch-color" v-model="saveLoginState" />
           </div>
-          
+
           <div class="flex">
 
             <!-- <a href="#">Forgot Password?</a> -->

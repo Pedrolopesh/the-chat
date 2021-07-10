@@ -2,6 +2,10 @@
 @import './forms-style.scss';
 @import './chatStyle.scss';
 
+:root {
+    --vs-pink: 255, 191, 238;
+}
+
 button, input{
     &:focus {outline:0 !important;}
 }
@@ -104,6 +108,13 @@ a{
     border: 1px solid rgba(0, 0, 0, 0.466);
 }
 
+.chip-pink{
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+    // height: 35px;
+    border: 1px solid rgba(255, 150, 150, 0.658);
+}
+
 .logout-icon{
     width: 50px !important;
     height: 20px !important;
@@ -118,4 +129,19 @@ a{
 .home-button-size{
     max-width: 100%;
     width: 120px;
+}
+
+.font-logo{
+    color: #e38622;
+    font-family: 'Bungee Shade', cursive;
+}
+
+.icon-size-15{
+    height: 15px;
+    width: 15px;
+}
+
+.icon-size-20{
+    height: 30px;
+    width: 30px;
 }

@@ -1,13 +1,22 @@
 <template>
     <div>
         <h2 class="mt-3 mb-4">TODO OS USUÁRIOS DO APP</h2>
-        <p>Olá <strong> {{ userData.name }} </strong>, veja a seguir todos os usuários que utilizam o nosso app</p>
-        <div v-if="items == ''">
-            ainda não há usuários cadastrados 😕, compartilhe o app com seus amigos.
+        <h3>Olá <strong> {{ userData.name }} </strong>, veja a seguir todos os usuários que utilizam o nosso app</h3>
+        <div v-if="items == '' " class="mt-6">
+            <h5>ainda não há usuários cadastrados 😕, compartilhe o app com seus amigos.</h5>
         </div>
 
-        <div @click="createChat(item)" class="container-list-chats ac mt-2" v-for="(item, i) in items" :key='i'>
-            <vs-button
+
+        <div class="container-card-users">
+            <div @click="createChat(item)" v-for="(item, i) in items" :key='i' class="ac">
+                <CardUser
+                    :img_src=item.img_profile
+                    :imageTitle="item.name"
+                    v-if="userData._id != item._id"
+                />
+            </div>
+
+            <!-- <vs-button
                 v-if="userData._id != item._id"
                 class="display-b ac mt-2"
                 size="large"
@@ -24,21 +33,23 @@
                     Enviar Mensagem
                 </template>
 
-            </vs-button>
+            </vs-button> -->
         </div>
-
-        <button @click="testeFunc">
-            testando a função
-        </button>
 
     </div>
 </template>
 <script>
+import CardUser from '../../components/CardUsers/CardUsers'
 import { mapGetters } from 'vuex';
 import { BIconEnvelope } from 'bootstrap-vue';
 import dayjs from 'dayjs';
 
 export default {
+    components:{
+        BIconEnvelope,
+        CardUser
+    },
+
     data:() => ({
         userType:'',
         items:[],
@@ -46,9 +57,6 @@ export default {
         chatModal:false,
 
     }),
-    components:{
-        BIconEnvelope
-    },
     computed:{
         ...mapGetters({
             userData:'userData',
@@ -57,69 +65,18 @@ export default {
         })
     },
     methods:{
-        testeFunc(){
-            console.log("foi aqui aqui")
-            this.$store.commit('setChatCreated', true)
-            this.$router.push('/ChatList')
-        },
-        getAllUsers(){
+        async getAllUsers(){
             this.$store.commit('setApiLoading', true)
-
-
-            this.$http.get(this.prodUrl + '/list/users')
-                .then(resp => {
-                if(resp.data == ''){ this.$store.commit('setApiLoading', false)}
-                else{ this.$store.commit('setApiLoading', false) }
-
-                this.items = resp.data
-                // setTimeout( () => {  this.checkDatas() }, 200);
-            })
-            .catch(err => {
-                console.log(err)
-            })
-
-            let logedId = localStorage.getItem('id')
-
+            const resp = await this.$http.get(this.prodUrl + '/list/users').catch(err => { console.log(err) })
+            if(resp.data == ''){ this.$store.commit('setApiLoading', false)}
+            else{ this.$store.commit('setApiLoading', false) }
+            this.rebuildUsersArray(resp.data)
         },
-        checkTypeUser(param){
-            
-            let logedId = localStorage.getItem('id')
-
-            console.log("USUÁRIO LOGADO")
-            console.log(logedId)
-            console.log("USUÁRIO ORIGEM")
-            console.log(param)
-            
-            for(let i in itens){
-                console.log(i)
-            }
-            // console.log("USUÁRIO RESPOSTA")
-            // console.log(param.user_response[0]._id)
-            // console.log("aqui aqui aqui aqui")
-            // console.log(param)
-
-            if( logedId == param.user_origin[0]._id ){
-                
-                // console.log("User é origin")
-                // console.log("IDS SÃO IGUAIS")
-                // console.log(param.user_response[0])
-
-                //se o usuário que está logado for o usuário origem, o usertype é response para que mostra as informações do user response.
-                this.userType = 'user_response'
-                // this.requestPreferences = true
-                
-                // this.items.push(param.user_response[0])
-
-            }else{
-                
-                // console.log("User é response")
-                // console.log("IDs diferentes")
-                // this.items.push(param.user_origin[0])
-                
-                this.userType = 'user_origin'
-                // this.requestPreferences = false
-            
-            }
+        rebuildUsersArray(allUsers) {
+            const filterArray = allUsers.filter((item) => {
+                return item._id !== this.userData._id
+            })
+            this.items = filterArray
         },
         createChat(param){
             console.log(param)
@@ -156,13 +113,6 @@ export default {
             .catch(err => {
                 console.log(err)
             })
-            
-            // this.selectedChatId = param._id
-
-            // this.$store.commit("setSelectedChatData", param);
-            
-            // this.chatModal = true
-            
         },
     },
     created(){
@@ -171,5 +121,10 @@ export default {
 }
 </script>
 <style lang="scss">
-    
+    .container-card-users {
+        flex-wrap: wrap;
+        max-width: 100%;
+        width: 100%;
+        display: flex;
+    }
 </style>

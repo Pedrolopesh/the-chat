@@ -19,6 +19,7 @@ export default {
             state.chatId = data
         },
         setChatCreated(state, data){
+            console.log("batata", data)
             state.chatCreated = data
         },
     },
