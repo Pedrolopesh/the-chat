@@ -41,7 +41,7 @@
         <!-- NOTIFICATIONS -->
         <vs-dialog prevent-close blur v-model="notificationConfig">
             <h4 class="not-margin">
-                ]<b>Notificações</b>
+                <b>Notificações</b>
             </h4>
             <div>
                 <Notifications @closeNoficationsModal="closeModalNotifications"/>
@@ -88,9 +88,11 @@ import Svgs from  '../../assets/svg'
 import { BIconBellFill, BIconPeopleFill, BIconGearWideConnected, BIconPlusCircleFill } from 'bootstrap-vue';
 import NewChatModal from '../NewChat/NewChat.vue'
 import ProfileConfigData from '../ProfileConfigData/ProfileConfigData.vue'
+import Notifications from '../Notifications/Notifications.vue'
 export default {
 
     components:{
+        Notifications,
         BIconBellFill, BIconPeopleFill,
         BIconGearWideConnected, BIconPlusCircleFill,
         NewChatModal, ProfileConfigData

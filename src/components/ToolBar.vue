@@ -61,22 +61,22 @@
       </vs-sidebar> -->
 
       <div class="footer-bar ac">
-        
+
         <vs-button to="/ChatList" :active="activeRouter == 0" @click="activeRouter = 0" class="ac button-toolbar-first">
           <BIconChatDots/>
           <span class="display-b">Conversas</span>
         </vs-button>
-        
+
         <vs-button to="/SearchUser" :active="activeRouter == 1" @click="activeRouter = 1" class="ac button-toolbar-midle">
           <BIconPeopleFill/>
           <span class="display-b">Usuários</span>
         </vs-button>
-        
+
         <vs-button to="/Profile" :active="activeRouter == 2" @click="activeRouter = 2" class="ac button-toolbar-end">
           <BIconPerson/>
           <span class="display-b">Perfil</span>
         </vs-button>
-      
+
       </div>
     </div>
 </template>

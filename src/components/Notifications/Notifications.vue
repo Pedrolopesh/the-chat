@@ -1,6 +1,7 @@
 <template>
   <div>
       <h1> Notificações </h1>
+      <button @click="checkServiceWorker"> ativar notificações </button>
   </div>
 </template>
 
