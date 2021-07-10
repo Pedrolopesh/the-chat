@@ -27,10 +27,11 @@ export default {
         console.log('Service worker Registered...');
 
         console.log('Registering Push...')
+        console.log('this.publicKey', this.publicKey)
         const subscription = await register.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: this.urlBase64ToUint8Array(this.publicKey)
-        })
+        }).then( async (resp) => { console.log('RESPONSE DO SEVICE WORK', resp) })
         console.log('Push Registered...')
 
         const resp = await this.$http.post(this.$url + '/subscribe', JSON.stringify(subscription) )
@@ -41,20 +42,22 @@ export default {
       },
 
 
-        urlBase64ToUint8Array(base64String) {
-            const padding = "=".repeat((4 - base64String.length % 4) % 4);
-            const base64 = (base64String + padding)
-                .replace(/\-/g, "+")
-                .replace(/_/g, "/");
+      urlBase64ToUint8Array(base64String) {
 
-            const rawData = window.atob(base64);
-            const outputArray = new Uint8Array(rawData.length);
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding)
+          .replace(/-/g, '+')
+          .replace(/_/g, '/');
 
-            for (let i = 0; i < rawData.length; ++i) {
-                outputArray[i] = rawData.charCodeAt(i);
-            }
-            return outputArray;
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+
+        for (let i = 0; i < rawData.length; ++i) {
+          outputArray[i] = rawData.charCodeAt(i);
         }
+
+        return outputArray;
+      },
     }
 }
 </script>
