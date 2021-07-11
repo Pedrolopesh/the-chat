@@ -2,6 +2,7 @@
   <div>
       <h1> Notificações </h1>
       <button @click="pushRegister()"> ativar notificações </button>
+      <vs-button @click="sendNotification()"> Enviar notificação </vs-button>
   </div>
 </template>
 
@@ -54,6 +55,16 @@ export default {
 
         return outputArray;
       },
+
+      async sendNotification() {
+        const body = {
+          user_id: this.userData._id
+        }
+
+        const resp = await this.$http.post(this.$url + '/notification/send', body)
+        console.log('ENVIOU NOTIFICAÇÃO', resp)
+
+      }
     }
 }
 </script>
