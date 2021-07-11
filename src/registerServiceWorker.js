@@ -1,7 +1,10 @@
 import { register } from 'register-service-worker';
 
+const currentPath = document.location.origin
+console.log('currentPath', currentPath)
 
-  register(`${process.env.BASE_URL}service-worker.js`, {
+  // register(`${process.env.BASE_URL}service-worker.js`, {
+  register(`${currentPath}/service-worker.js`, {
     ready() {
       console.log('App is being served from cache by a service worker.\n' +
         'For more details, visit https://goo.gl/AFskqB');
