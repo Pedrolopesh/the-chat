@@ -36,6 +36,11 @@ self.addEventListener("push", (event) => {
           action: "explore",
           title: "Explorethis new world",
           icon: "./the-chat-logo-512x512.png"
+        },
+        {
+          action: "close",
+          title: "Close",
+          icon: "./the-chat-logo-512x512.png"
         }
     ]
   };
