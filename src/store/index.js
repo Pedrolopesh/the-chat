@@ -11,10 +11,12 @@ export default new Vuex.Store({
     prodUrl: process.env.VUE_APP_PROD_URL,
     userData:'',
     apiLoading:false,
+    toogleChatsMenu:false,
   },
   getters:{
     prodUrl: state => state.prodUrl,
     userData: state => state.userData,
+    toogleChatsMenu: state => state.toogleChatsMenu,
     apiLoading: state => state.apiLoading,
   },
   mutations: {
@@ -23,6 +25,9 @@ export default new Vuex.Store({
     },
     setUserData(state, data){
       state.userData = data
+    },
+    setToogleChatsMenu(state, data){
+      state.toogleChatsMenu = data
     },
     setApiLoading(state, data){
       state.apiLoading = data
@@ -40,6 +45,11 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
+
+    changeToogleChatsMenu(context, data) {
+      console.log(data)
+      context.commit('setToogleChatsMenu', data)
+    }
   },
   modules: {
     UserListVuex,

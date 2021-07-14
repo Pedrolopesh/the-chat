@@ -17,7 +17,7 @@
         </div>
 
         <div v-else class="container-chatlist">
-            <div class="container-chats" v-if="chatItems.items !== '' ">
+            <div class="container-chats" :class="toogleChatsMenu ? 'hideMenu': 'showMenu' " v-if="chatItems.items !== '' ">
 
                 <SearchPersonInput />
 
@@ -66,6 +66,7 @@ export default {
             userData:'userData',
             chatId:'chatId',
             chatCreated:'chatCreated',
+            toogleChatsMenu: 'toogleChatsMenu'
         })
     },
 
@@ -128,10 +129,13 @@ export default {
         userData() {
             this.listChatConections()
         },
-        
+
+        toogleChatsMenu(){
+            console.log('chatlist', this.toogleChatsMenu)
+        },
+
         chatCreated() {
             if(this.chatCreated) {
-                console.log("VALOR MUDOU VALOR MUDOU")
                 this.listChatConections()
             }
         }
@@ -149,12 +153,18 @@ export default {
 
     .container-chats{
         display: block;
+        position: absolute;
+        z-index: 10;
         background: #ffc5c5;
         border-radius: 0px 10px 0px 0px;
         min-height: 95.8vh;
 
-        @media screen and (max-width: 1700) {        
+        /* @media screen and (max-width: 1700px) {
             min-height: 90.8vh;
+        } */
+
+        @media screen and (max-width: 600px) {
+            min-height: 83vh;
         }
 
         .contact-message{
@@ -188,6 +198,11 @@ export default {
         text-align: center;
         max-width: 100%;
         width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+        @media screen and (max-width: 600px) {
+            width: 100%;
+        }
     }
 
     .select-contact-message {
@@ -197,4 +212,49 @@ export default {
         border-radius: 10px !important;
         box-shadow: -10px 6px 15px rgb(0 0 0 / 20%) !important;
     }
+
+    .showMenu{
+        display: block;
+        animation: 1;
+        animation-name: animation-toogle-menu-show;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        transform: translateX(0);
+    }
+
+    @keyframes animation-toogle-menu-show{
+        0% {
+            transform: translateX(-500px);
+            display: none;
+            opacity: 0;
+            }
+        100%{
+            transform: translateX(0);
+            opacity: 1;
+            display: block;
+        }
+    }
+
+    .hideMenu {
+        animation: 1;
+        animation-name: animation-toogle-menu;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        transform: translateX(-500px);
+    }
+
+    @keyframes animation-toogle-menu{
+        0% {
+            transform: translateX(0);
+            display: block;
+            opacity: 1;
+         }
+        100%{
+            transform: translateX(-500px);
+            opacity: 0;
+            display: none;
+         }
+    }
+
+
 </style>

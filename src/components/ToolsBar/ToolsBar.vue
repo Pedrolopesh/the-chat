@@ -2,17 +2,24 @@
     <div>
 
         <div class="container-toolsbar">
+
+            <div>
+                <vs-button gradient warn animation-type="scale" @click="toogleChatInfo()" style="min-width: 50px">
+                    <BIconLayoutSidebarInsetReverse class="icon-size-15"/>
+                </vs-button>
+            </div>
+
             <!-- <div>
                 <vs-button to="/ChatList" gradient style="min-width: 50px" color="rgb(59,222,200)" animation-type="scale">
                     <BIconPeopleFill class="icon-size-15"/>
                 </vs-button>
             </div> -->
-
-            <div>
+            <!--<div>
+                TODO: FIX ERRORS AND TEST THE FUNCTION
                 <vs-button @click="notificationConfig = !notificationConfig" gradient style="min-width: 50px" warn animation-type="scale">
                     <BIconBellFill class="icon-size-15"/>
                 </vs-button>
-            </div>
+            </div> -->
 
             <div>
                 <vs-button @click="configProfile = !configProfile" gradient style="min-width: 50px" animation-type="scale">
@@ -83,9 +90,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Svgs from  '../../assets/svg'
-import { BIconBellFill, BIconPeopleFill, BIconGearWideConnected, BIconPlusCircleFill } from 'bootstrap-vue';
+import { BIconBellFill, BIconPeopleFill, BIconGearWideConnected, BIconPlusCircleFill, BIconLayoutSidebarInsetReverse } from 'bootstrap-vue';
 import NewChatModal from '../NewChat/NewChat.vue'
 import ProfileConfigData from '../ProfileConfigData/ProfileConfigData.vue'
 import Notifications from '../Notifications/Notifications.vue'
@@ -95,12 +102,14 @@ export default {
         Notifications,
         BIconBellFill, BIconPeopleFill,
         BIconGearWideConnected, BIconPlusCircleFill,
-        NewChatModal, ProfileConfigData
+        NewChatModal, ProfileConfigData,
+        BIconLayoutSidebarInsetReverse
     },
 
     computed: {
         ...mapGetters({
             newChatModal:'newChatModal',
+            toogleChatsMenu: 'toogleChatsMenu'
         })
     },
 
@@ -109,13 +118,32 @@ export default {
         newChat: false,
         configProfile: false,
         addDisable: true,
-        notificationConfig: true,
+        notificationConfig: false,
+        toogleChatInfoState: false
     }),
 
 
     methods : {
+        ...mapActions({
+            changeToogleChatsMenu: 'changeToogleChatsMenu'
+        }),
+
         changeButtonState(selectedParam) {
             if (selectedParam) this.addDisable = false
+        },
+
+        toogleChatInfo() {
+
+            if(!this.toogleChatInfoState) {
+                this.$store.commit('setToogleChatsMenu', true)
+                this.toogleChatInfoState = true
+                // this.changeToogleChatsMenu(true)
+            }
+            else {
+                // this.changeToogleChatsMenu(false)
+                this.$store.commit('setToogleChatsMenu', false)
+                this.toogleChatInfoState = false
+            }
         },
 
         openModalNewChat() {
@@ -142,6 +170,12 @@ export default {
         },
     },
 
+    watch: {
+        toogleChatsMenu(){
+            console.log('toolbar', this.toogleChatsMenu)
+        },
+    }
+
 }
 </script>
 
@@ -150,6 +184,7 @@ export default {
     display: flex;
     max-width: 100%;
     width: 100%;
+    padding: 2px 0px 2px 0px;
 }
 
 .container-logo{
