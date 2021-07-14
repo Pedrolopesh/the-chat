@@ -20,6 +20,7 @@
 //   event.waitUntil(self.registration.showNotification(title, options));
 // }
 self.addEventListener("push", (event) => {
+  console.log("CHEOU NO PUSH")
   const options = {
     body: 'HELLO PUSH NOTIFICATIONS',
     icon: "./the-chat-logo.jpg",
