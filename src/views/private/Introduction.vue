@@ -1,43 +1,30 @@
 <template>
     <div>
-          <vs-card-group class="intro-container ac">
-            <vs-card v-for="(item,i) in 3" @click="handleClick" :key="i">
-                <template #title>
-                    <h3>Pot with a plant</h3>
-                </template>
+        <div class="container-text ac">
 
-                <template #img>
-                    <img :src="`https://vuesax.com/foto${i+1}.png`" alt="">
-                </template>
+            <h1>BEM VINDO!</h1>
 
-                <template #text>
-                    <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    </p>
-                </template>
+            <p>Bem vindo ao the chat app, um lugar único com infinitas possibilidade de conexões com pessoas ao redor do mundo, conversa com amigos e muito mais </p>
 
-                <template #interactions>
+            <p>Veja a seguir algumas possibilidades que o the chat app oferece.</p>
 
-                    <vs-button danger icon>
-                    <i class='bx bx-heart'></i>
-                    </vs-button>
+            <h4 class="mt-5 display-b">Menu de conversas</h4>
+            <p>Para abrir o menu com todas as conversas que você está envolvido, clique em <img src="../../assets/toogle-button.png" class="image-size-10" />, aqui você pode ver todas as conversas que você já iniciou com algum usuário.</p>
 
-                    <vs-button class="btn-chat" shadow primary>
-                    <i class='bx bx-chat' ></i>
-                    <span class="span">
-                        54
-                    </span>
-                    </vs-button>
-                    
-                </template>
-            </vs-card>
-        </vs-card-group>
+            <h4 class="mt-5 display-b">Configurações</h4>
+            <p>Para abrir as configurações, clique em <img src="../../assets/settings-button.png" class="image-size-10" />, aqui você pode modificar suas informações de usuário e fodo de perfil para melhor se apresentar dentro do app.</p>
 
-            <vs-button to="/ChatList" class="ac">
+            <h4 class="mt-5 display-b">Procurar amigos.</h4>
+            <p>para adicionar novos amigos clique sobe o icone <img src="../../assets/add-friend.png" class="image-size-10" />, aqui irá mostrar todos os usuários da rede do the chat para você se conectar</p>
+
+            <h4 class="mt-5 display-b">Configurações</h4>
+            <p>Para sair do app basta clicar em <img src="../../assets/logout-button.png" class="image-size-10" /> </p>
+
+            <vs-button to="/ChatList" class="ac mt-6 display-b">
                 Pular
             </vs-button>
 
-
+        </div>
     </div>
 </template>
 <script>
@@ -58,6 +45,29 @@ export default {
         @media screen and (max-width: 800px){
             max-width: 100%;
             width: 100%;
+        }
+    }
+
+    .container-text{
+        display: block;
+        text-align: start;
+        padding: 20px;
+        max-width: 100%;
+        width: 50%;
+
+        @media screen and (max-width: 800px){
+            max-width: 100%;
+            width: 80%;
+        }
+    }
+
+    .image-size-10{
+        max-width: 100%;
+        width: 6%;
+
+        @media screen and (max-width: 800px){
+            max-width: 100%;
+            width: 10%;
         }
     }
 </style>

@@ -42,8 +42,13 @@ export default {
 <style lang="scss">
   .home-icon{
       display: block;
-      max-width: 15%;
+      max-width: 10%;
       width: 100%;
+
+      @media screen and (max-width: 800px) {
+        max-width: 25%;
+        width: 100%;
+      }
 
     svg{
       display: block;

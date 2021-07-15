@@ -2,7 +2,7 @@
   <div>
     <div class="center">
 
-      <vs-button size="large" class="ac home-button-size" danger @click="showSignupDialog=!showSignupDialog">
+      <vs-button size="large" class="ac home-button-size mt-6 display-b" color="rgb(253, 171, 24)" @click="showSignupDialog=!showSignupDialog">
         Cadastre-se
       </vs-button>
 
@@ -100,13 +100,13 @@
               Cadastre-se
             </vs-button>
 
-            <vs-button
+            <!-- <vs-button
               class="mt-1"
               block
               @click="imageProfileOption = true"
             >
               Escolher avatar
-            </vs-button>
+            </vs-button> -->
 
             <div class="new">
               Já possui uma conta? <a href="#">faça seu login</a>

@@ -157,7 +157,7 @@ export default {
         z-index: 10;
         background: #ffc5c5;
         border-radius: 0px 10px 0px 0px;
-        min-height: 95.8vh;
+        height: 95.8vh;
 
         /* @media screen and (max-width: 1700px) {
             min-height: 90.8vh;
