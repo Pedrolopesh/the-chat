@@ -2,7 +2,7 @@
   <div>
     <div class="center">
 
-      <vs-button size="large" class="ac mt-13 home-button-size" color="rgb(199, 96, 44)" @click="showSignupDialog=!showSignupDialog">
+      <vs-button size="large" class="ac mt-2 home-button-size" color="rgb(199, 96, 44)" @click="showSignupDialog=!showSignupDialog">
         Signin
       </vs-button>
 
