@@ -59,8 +59,8 @@
             <!-- </perfect-scrollbar> -->
             <div class="text-box-chat">
               <div class="d-flex">
-                  <textarea class="text-input-chat" v-model="newMessage"/>
-                  <vs-button :loading="newMessageLoading" type="submit">
+                  <textarea @keyup="checkEnterKey" class="text-input-chat" v-model="newMessage"/>
+                  <vs-button :loading="newMessageLoading" type="submit" :disabled="newMessage ? false : true">
                     <BIconCursor @click="createMessage()" class="cp send-message-icon"/>
                   </vs-button>
               </div>
@@ -288,6 +288,13 @@ export default {
           // console.log(scrollContainer)
 
         })
+      },
+
+      checkEnterKey(e) {
+        if(e.which == 13){
+          console.log('TECLA ENTER')
+          this.createMessage()
+        }
       },
 
       checkOriginUser(){

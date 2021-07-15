@@ -1,24 +1,9 @@
 <template>
     <div>
-        <div v-if="savedChatConections.length === 0 ">
-            <h2>Você ainda não Possue Mensagens com nenhum usuário</h2>
-            <h4>Navegue até a aba de usuário e adicione amigos para conversar</h4>
 
-            <vs-button
-                class="display-b ac mt-5"
-                size="large"
-                gradient
-                warn
-                animation-type="scale"
-                to="/SearchUser"
-            >
-                Adicionar amigos
-            </vs-button>
-        </div>
-
-        <div v-else class="container-chatlist">
+        <div class="container-chatlist">
             <div class="container-chats" :class="toogleChatsMenu ? 'hideMenu': 'showMenu' " v-if="chatItems.items !== '' ">
-                <SearchPersonInput />
+                <SearchPersonInput :chatSelected="chatSelectedState" @inputSearchActive="changeChatSelectedState"/>
                 <ChatsConections @setSelectedUser="setSelectedUserName"/>
             </div>
 
@@ -66,6 +51,7 @@ export default {
         chatItems: '',
         selectedChatId: '',
         selectedUserName: '',
+        chatSelectedState: false,
     }),
 
     methods: {
@@ -74,9 +60,14 @@ export default {
         }),
 
         setSelectedUserName(selectedUserNameParam, selectedChatIdParam) {
-            console.log('foi ?', selectedUserNameParam, selectedChatIdParam)
+            console.log('WHATS ? ')
+            this.chatSelectedState = true
             this.selectedUserName = selectedUserNameParam
             this.selectedChatId = selectedChatIdParam
+        },
+
+        changeChatSelectedState() {
+            this.chatSelectedState = false
         }
     },
 

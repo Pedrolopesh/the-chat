@@ -6,13 +6,13 @@
           <vs-input
             class="inputSearch"
             type="text"
-            @change="searchForUsers()"
             :class=" 'input-outlined-pink icon-search' "
             :color=" 'input-outlined-pink' "
             v-model="searchInput"
             placeholder="Procurar por conversa"
             icon-after
             :state="primary"
+            @keyup="checkInput()"
         >
             <!-- @click-icon="hasVisiblePassword = !hasVisiblePassword" -->
 
@@ -27,9 +27,11 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import { BIconPlusCircleFill, BIconSearch } from 'bootstrap-vue';
 
 export default {
+    props:['chatSelected'],
     components: {
         BIconPlusCircleFill,
         BIconSearch
@@ -39,9 +41,51 @@ export default {
         searchInput: ''
     }),
 
+    computed: {
+        ...mapGetters({
+            userData:'userData',
+            savedChatConections:'savedChatConections',
+        })
+    },
+
     methods: {
-        searchForUsers() {
-            
+        ...mapActions({
+            listChatConections: 'listChatConections',
+        }),
+
+        functionFilterTest(textParam){
+            const filterItems = (query) => {
+                return this.savedChatConections.filter(el => el.userData.name.toLowerCase().indexOf(query.toLowerCase()) > -1);
+            };
+
+            console.log('filterItems(textParam)', filterItems(textParam))
+
+            this.$store.commit('setSavedChatConections', filterItems(textParam))
+        },
+
+        checkInput(){
+            if(this.searchInput === ''){
+                this.listChatConections()
+            }
+        },
+
+        clearInputAndSearch() {
+            this.searchInput = ''
+            this.listChatConections()
+        }
+    },
+
+    watch: {
+        searchInput() {
+            this.functionFilterTest(this.searchInput)
+            this.$emit('inputSearchActive', false)
+        },
+
+        chatSelected() {
+            console.log('chatSelected', this.chatSelected)
+            if(this.chatSelected) {
+                this.clearInputAndSearch()
+            }
         }
     }
 }
