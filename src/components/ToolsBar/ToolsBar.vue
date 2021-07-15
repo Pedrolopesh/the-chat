@@ -3,8 +3,8 @@
 
         <div class="container-toolsbar">
 
-            <div>
-                <vs-button gradient warn animation-type="scale" @click="toogleChatInfo()" style="min-width: 50px">
+            <div class="p5">
+                <vs-button class="m0" gradient warn animation-type="scale" @click="toogleChatInfo()" style="min-width: 50px">
                     <BIconLayoutSidebarInsetReverse class="icon-size-15"/>
                 </vs-button>
             </div>
@@ -21,20 +21,20 @@
                 </vs-button>
             </div> -->
 
-            <div>
-                <vs-button @click="configProfile = !configProfile" gradient style="min-width: 50px" animation-type="scale">
+            <div class="p5">
+                <vs-button class="m0" @click="configProfile = !configProfile" gradient style="min-width: 50px" animation-type="scale">
                     <BIconGearWideConnected class="icon-size-15"/>
                 </vs-button>
             </div>
 
-            <div>
-                <vs-button @click="newChat = !newChat" gradient style="min-width: 50px" animation-type="scale" success>
+            <div class="p5">
+                <vs-button class="m0" @click="newChat = !newChat" gradient style="min-width: 50px" animation-type="scale" success>
                     <BIconPlusCircleFill class="icon-size-15"/>
                 </vs-button>
             </div>
 
-            <div>
-                <vs-button danger animation-type="scale" @click="tryLogout" style="min-width: 50px">
+            <div class="p5">
+                <vs-button class="m0" danger animation-type="scale" @click="tryLogout" style="min-width: 50px">
                     <BIconPower class="icon-size-15"/>
                 </vs-button>
             </div>
@@ -184,7 +184,7 @@ export default {
     display: flex;
     max-width: 100%;
     width: 100%;
-    padding: 2px 0px 2px 0px;
+    /* padding: 2px 0px 2px 0px; */
 }
 
 .container-logo{
