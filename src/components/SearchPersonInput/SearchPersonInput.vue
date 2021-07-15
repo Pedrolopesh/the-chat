@@ -5,7 +5,8 @@
 
           <vs-input
             class="inputSearch"
-            type="password"
+            type="text"
+            @change="searchForUsers()"
             :class=" 'input-outlined-pink icon-search' "
             :color=" 'input-outlined-pink' "
             v-model="searchInput"
@@ -36,7 +37,13 @@ export default {
 
     data:() => ({
         searchInput: ''
-    })
+    }),
+
+    methods: {
+        searchForUsers() {
+            
+        }
+    }
 }
 </script>
 

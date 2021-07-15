@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="chatItems.length === 0 ">
+        <div v-if="savedChatConections.length === 0 ">
             <h2>Você ainda não Possue Mensagens com nenhum usuário</h2>
             <h4>Navegue até a aba de usuário e adicione amigos para conversar</h4>
 
@@ -18,23 +18,8 @@
 
         <div v-else class="container-chatlist">
             <div class="container-chats" :class="toogleChatsMenu ? 'hideMenu': 'showMenu' " v-if="chatItems.items !== '' ">
-
                 <SearchPersonInput />
-
-                <div v-for="(item ,i) in chatItems" :key="i" class="contact-message">
-                    <button
-                        :class="selectedChatId === item.chatInfo._id ? 'select-contact-message' : '' "
-                        @click="selectedChatId = item.chatInfo._id , selectedUserName = item.userData"
-                        class="container-contact-info"
-                    >
-                        <div class="mr-4">
-                            <Avatar :img_profile="item.userData.img_profile" />
-                        </div>
-                        <span class="clr-white">
-                            {{ item.userData.name }}
-                        </span>
-                    </button>
-                </div>
+                <ChatsConections @setSelectedUser="setSelectedUserName"/>
             </div>
 
             <div class="container-messagens">
@@ -56,16 +41,22 @@
 import Avatar from '../../../components/Avatar/Avatar'
 import { mapActions, mapGetters } from 'vuex';
 import ChatModal from '../../../components/cpmChatmodal';
-import SearchPersonInput from '../../../components/SearchPersonInput/SearchPersonInput'
+import SearchPersonInput from '../../../components/SearchPersonInput/SearchPersonInput.vue';
+import ChatsConections from '../../../components/ChatsConections/ChatsConections.vue';
+
 
 export default {
-    components: { Avatar, ChatModal, SearchPersonInput },
+    components: {
+        Avatar, ChatModal,
+        SearchPersonInput, ChatsConections
+    },
 
     computed: {
         ...mapGetters({
             userData:'userData',
             chatId:'chatId',
             chatCreated:'chatCreated',
+            savedChatConections:'savedChatConections',
             toogleChatsMenu: 'toogleChatsMenu'
         })
     },
@@ -82,54 +73,16 @@ export default {
             getUserData: 'getUserData',
         }),
 
-        async listChatConections(){
-
-            let userId = this.userData
-            if (!userId) {
-                return this.getUserData()
-            }
-            const respChatItems = await this.$http.get(this.$url + `/chats/userid/${userId._id}`).catch(err => { console.log(err) })
-            let formatedItens = [...respChatItems.data.user_response_mesage, ...respChatItems.data.user_origin_message]
-            this.formatChatMessages(formatedItens)
-        },
-
-        formatChatMessages(chatItemsParam) {
-            // console.log("LOGED USER IS =>", chatItemsParam)
-            const allChatItens = chatItemsParam
-            console.log("ALL DATA =>", allChatItens)
-            let newChatItens = []
-            for (let i in allChatItens) {
-                if (this.userData._id === allChatItens[i].user_response[0]._id) {
-                    newChatItens.push({
-                        userData: allChatItens[i].user_origin[0],
-                        chatInfo: allChatItens[i]
-                    })
-                }
-                if (this.userData._id === allChatItens[i].user_origin[0]._id) {
-                    newChatItens.push({
-                        userData: allChatItens[i].user_response[0],
-                        chatInfo: allChatItens[i]
-                    })
-                }
-            }
-            console.log("DATA =>", newChatItens)
-            this.chatItems = newChatItens
-        },
-
-        selectedChatConnection(item) {
-            console.info(item.chatInfo._id)
+        setSelectedUserName(selectedUserNameParam, selectedChatIdParam) {
+            console.log('foi ?', selectedUserNameParam, selectedChatIdParam)
+            this.selectedUserName = selectedUserNameParam
+            this.selectedChatId = selectedChatIdParam
         }
     },
 
-    created() {
-        this.listChatConections()
-    },
+    created() {},
 
     watch: {
-        userData() {
-            this.listChatConections()
-        },
-
         toogleChatsMenu(){
             console.log('chatlist', this.toogleChatsMenu)
         },
@@ -138,7 +91,7 @@ export default {
             if(this.chatCreated) {
                 this.listChatConections()
             }
-        }
+        },
     }
 
 }

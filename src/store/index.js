@@ -31,14 +31,13 @@ export default new Vuex.Store({
     },
     setApiLoading(state, data){
       state.apiLoading = data
-    }
+    },
   },
   actions: {
     async getUserData(context){
       let userId = localStorage.getItem('id')
       await axios.get(process.env.VUE_APP_PROD_URL + `/user/${userId}`)
       .then(resp => {
-        // console.log(resp)
         context.commit('setUserData', resp.data)
       })
       .catch(err => {

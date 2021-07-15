@@ -26,30 +26,36 @@ export default {
         progress: 0,
         active: true,
         time: 6000,
+        chatItems: []
     }),
 
     created(){
+        this.listChatConections()
         this.getUserData()
     },
 
     computed: {
 
-        ...mapGetters({
-            
-            newMessage: 'newMessage',
+        onload(){
+            this.listChatConections()
+        },
 
+        ...mapGetters({
+            newMessage: 'newMessage',
+            userData: 'userData',
         }),
 
     },
-    
+
     methods: {
         ...mapActions({
             getUserData: 'getUserData',
+            listChatConections: 'listChatConections',
         }),
 
         recivedMessage1(){
           this.recivedMessage()
-        }
+        },
     },
     watch: {
         active(val) {
@@ -64,8 +70,11 @@ export default {
               this.progress = 0
             }, this.time);
           }
-        }
-        
+        },
+        userData() {
+            this.listChatConections()
+        },
+
     }
 
 }
