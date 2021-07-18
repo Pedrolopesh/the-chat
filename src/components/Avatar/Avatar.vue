@@ -4,14 +4,14 @@
             v-if="img_profile"
             class="cp"
             size="70"
-            badge
-            badge-color="danger"
             badge-position="top-right"
         >
             <img v-if="img_profile != '' " :src="img_profile" alt="avatar">
-            <template #badge>
+            <!-- <template #badge>
+                badge
+                badge-color="danger"
                 28
-            </template>
+            </template> -->
         </vs-avatar>
 
         <vs-avatar
