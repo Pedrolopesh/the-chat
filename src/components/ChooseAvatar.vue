@@ -7,23 +7,23 @@
 
         <!-- <vs-dialog prevent-close v-model="showAvatarDialog"> -->
 
-            <vs-avatar 
+            <vs-avatar
                 size="100"
                 circle
                 class="cp ac"
                 @click="pickAvatar"
             >
                 <img :src="imageUrl" alt="" v-if="selectedFile">
-                <input 
-                    ref="fileInput" 
-                    type="file" 
-                    v-show="false" 
-                    accept="image/*" 
+                <input
+                    ref="fileInput"
+                    type="file"
+                    v-show="false"
+                    accept="image/*"
                     @change="onFilePicked"
                 >
                 <BIconPersonCircle class="icon-user" v-if="!selectedFile"/>
             </vs-avatar>
-            
+
             <vs-button success class="ac" @click="uploadImage">
                 Concluir
             </vs-button>
@@ -31,7 +31,7 @@
             <vs-button class="ac mt-1" @click="skip">
                 Escolher depois
             </vs-button>
-        
+
         <!-- </vs-dialog> -->
     </div>
 </template>
