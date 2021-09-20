@@ -38,6 +38,7 @@ export default {
         ...mapGetters({
             userData:'userData',
             savedChatConections: 'savedChatConections',
+            chatId: 'chatId',
         })
     },
     methods:{
@@ -50,8 +51,6 @@ export default {
             this.$emit('setSelectedUser', selectedChat, selectedChatInfoId)
         }
     },
-
-    watch:{}
 }
 </script>
 

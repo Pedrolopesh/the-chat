@@ -171,9 +171,9 @@ export default {
     },
 
     watch: {
-        toogleChatsMenu(){
-            console.log('toolbar', this.toogleChatsMenu)
-        },
+        // toogleChatsMenu(){
+        //     console.log('toolbar', this.toogleChatsMenu)
+        // },
     }
 
 }

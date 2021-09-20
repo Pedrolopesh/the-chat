@@ -35,9 +35,11 @@ export default new Vuex.Store({
   },
   actions: {
     async getUserData(context){
+      console.log('vue xxxxx')
       let userId = localStorage.getItem('id')
       await axios.get(process.env.VUE_APP_PROD_URL + `/user/${userId}`)
       .then(resp => {
+        console.log('resp', resp.data)
         context.commit('setUserData', resp.data)
       })
       .catch(err => {

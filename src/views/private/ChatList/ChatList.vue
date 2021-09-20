@@ -57,6 +57,7 @@ export default {
     methods: {
         ...mapActions({
             getUserData: 'getUserData',
+            listChatConections: 'listChatConections',
         }),
 
         setSelectedUserName(selectedUserNameParam, selectedChatIdParam) {
@@ -83,8 +84,12 @@ export default {
                 this.listChatConections()
             }
         },
+        chatId() {
+            if(this.chatId.success == true){
+                this.listChatConections()
+            }
+        }
     }
-
 }
 </script>
 
@@ -168,7 +173,7 @@ export default {
 
     @keyframes animation-toogle-menu-show{
         0% {
-            transform: translateX(-500px);
+            transform: translateX(-680px);
             display: none;
             opacity: 0;
             }
@@ -184,7 +189,7 @@ export default {
         animation-name: animation-toogle-menu;
         animation-duration: 1s;
         animation-timing-function: linear;
-        transform: translateX(-500px);
+        transform: translateX(-680px);
     }
 
     @keyframes animation-toogle-menu{
@@ -194,7 +199,7 @@ export default {
             opacity: 1;
          }
         100%{
-            transform: translateX(-500px);
+            transform: translateX(-680px);
             opacity: 0;
             display: none;
          }

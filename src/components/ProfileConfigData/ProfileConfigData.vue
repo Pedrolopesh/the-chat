@@ -85,8 +85,7 @@ export default {
             apiLoading: 'apiLoading',
         }),
     },
-    mounted(){
-    },
+    mounted(){},
     methods:{
         ...mapActions({
             getUserData: 'getUserData',
@@ -160,14 +159,22 @@ export default {
         //   this.$router.push('/Home')
         },
 
-        getImageProfile(){
-            console.log(this.userData)
-        }
+        // getImageProfile(){
+        //     console.log(this.userData)
+        // }
     },
     watch: {
         userData(){
             console.log('userData mudou')
+            console.log(this.userData)
             this.selectedUser = this.userData
+        }
+    },
+    created() {
+        // console.log('USER DATA')
+        // console.log(this.userData)
+        if(this.userData === null){
+            this.getUserData()
         }
     }
 }

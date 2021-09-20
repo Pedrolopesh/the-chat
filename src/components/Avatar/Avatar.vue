@@ -13,20 +13,6 @@
                 28
             </template> -->
         </vs-avatar>
-
-        <vs-avatar
-            v-else
-            class="cp"
-            size="60"
-            badge
-            badge-color="danger"
-            badge-position="top-right"
-        >
-            <img src="https://res.cloudinary.com/publi-node-uploads/image/upload/v1617649089/no-image-1_enke1u.png" alt="avatar">
-            <template #badge>
-                28
-            </template>
-        </vs-avatar>
     </div>
 </template>
 

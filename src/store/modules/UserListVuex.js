@@ -20,7 +20,6 @@ export default {
             state.chatId = data
         },
         setChatCreated(state, data){
-            console.log("batata", data)
             state.chatCreated = data
         },
         setSavedChatConections(state, data){
@@ -37,7 +36,6 @@ export default {
         async listChatConections(context){
             let userId = localStorage.getItem('id')
             if (!userId) {
-                console.log('LOGOUT ?')
                 //logout
                 const currentPath = document.location.origin
                 document.location.href = `${currentPath}/`

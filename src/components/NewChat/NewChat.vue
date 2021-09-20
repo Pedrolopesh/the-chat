@@ -67,7 +67,7 @@ export default {
             console.info('REQUEST')
             this.$store.commit('setApiLoading', true)
             const resp = await this.$http.get(this.$url + '/list/users').catch(err => { console.log(err) })
-            if(resp.data == ''){ this.$store.commit('setApiLoading', false)}
+            if(resp.data == ''){ this.$store.commit('setApiLoading', false) }
             else{ this.$store.commit('setApiLoading', false) }
             this.rebuildUsersArray(resp.data)
         },
@@ -88,16 +88,21 @@ export default {
         },
 
         tryCreateChat() {
+            if(this.selectedUserChat === ''){
+                return this.$vs.notification({ color: 'danger', position: 'top-center', title: 'Você deve selecionar uma pessoa para começar uma conversa!' })
+            }
+
             var now = dayjs()
             let time = now.format("HH:mm")
             let date = now.format("DD/MM/YYYY")
 
             let chatData = [{ sender: "origin", message: "olá", timestamp: date + '-' + time}]
             let body = {
-                user_origin:this.userDataVuex._id,
+                user_origin:this.userDataVuex.content._id,
                 user_response:this.selectedUserChat._id,
                 chatData:chatData
             }
+            console.log(body)
 
             this.$http.post(this.$url + '/create/chat', body)
             .then(resp =>{
@@ -131,6 +136,12 @@ export default {
     created() {
         this.userData = localStorage.getItem('id')
         this.getAllUsers()
+    },
+
+    watch: {
+        // userDataVuex() {
+        //     console.log('wacth', this.userDataVuex)
+        // }
     }
 }
 </script>

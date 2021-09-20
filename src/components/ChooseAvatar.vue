@@ -73,8 +73,8 @@ export default {
 
             const fd = new FormData();
             fd.append('photo', this.selectedSourceFile)
-            fd.append('user_id', this.userData._id)
-            this.$http.patch(this.prodUrl + '/upload/user/image', fd)
+            fd.append('user_id', localStorage.getItem('id'))
+            this.$http.patch(this.$url + '/upload/user/image', fd)
             .then(resp => {
                 this.$vs.notification({
                     color: 'dark',
@@ -97,8 +97,20 @@ export default {
             })
         },
 
-        skip(){
-            this.$router.push('/Introduction')
+        async skip(){
+            let userId = localStorage.getItem('id')
+            const body = {
+                img_profile:'https://res.cloudinary.com/publi-node-uploads/image/upload/v1617649089/no-image-1_enke1u.png'
+            }
+
+            const resp = await this.$http.patch(`${this.$url}/update/user/image/${userId}`, body).catch(err => { console.log(err) })
+            if(resp.status === 200 && resp.data.success === true){
+                this.$vs.notification({ color: 'dark', position: 'top-center', title: 'Sucesso ao atualizar imagem de perfil 📸', })
+                this.$router.push('/Introduction')
+            }else{
+                this.$vs.notification({ color: 'danger', position: 'top-center', title: 'erro ao atualizar foto', })
+            }
+
         }
     },
     computed:{
