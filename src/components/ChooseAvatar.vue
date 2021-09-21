@@ -58,8 +58,6 @@ export default {
         onFilePicked(event){
             const files = event.target.files;
             this.selectedSourceFile = event.target.files[0];
-            // console.log(files)
-            // this.src = files
             this.selectedFile = true
             const fileReader = new FileReader()
             fileReader.addEventListener('load', () => { this.imageUrl = fileReader.result })

@@ -17,8 +17,6 @@
             </div>
         </div>
 
-
-        <Loading />
     </div>
 </template>
 
@@ -61,7 +59,6 @@ export default {
         }),
 
         setSelectedUserName(selectedUserNameParam, selectedChatIdParam) {
-            console.log('WHATS ? ')
             this.chatSelectedState = true
             this.selectedUserName = selectedUserNameParam
             this.selectedChatId = selectedChatIdParam
@@ -75,9 +72,7 @@ export default {
     created() {},
 
     watch: {
-        toogleChatsMenu(){
-            console.log('chatlist', this.toogleChatsMenu)
-        },
+        toogleChatsMenu(){},
 
         chatCreated() {
             if(this.chatCreated) {

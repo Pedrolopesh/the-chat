@@ -27,15 +27,19 @@ import Svgs from  '../../assets/svg'
 
 export default {
   name: 'Home',
+  
+  data:() => ({
+    Svgs: Svgs,
+    sinupOptionLogin: false
+  }),
+
   components: {
     ChooseAvatar,
     Signup,
     Signin,
   },
 
-  data:() => ({
-    Svgs: Svgs
-  })
+  methods: {}
 }
 </script>
 

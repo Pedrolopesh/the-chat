@@ -2,12 +2,12 @@
   <div>
     <div class="center">
 
-      <vs-button size="large" class="ac mt-2 home-button-size" color="rgb(199, 96, 44)" @click="showSignupDialog=!showSignupDialog">
+      <vs-button size="large" class="ac mt-2 home-button-size" color="rgb(199, 96, 44)" @click="showSigninDialog=!showSigninDialog">
         Signin
       </vs-button>
 
 
-      <vs-dialog prevent-close :loading="apiLoading" v-model="showSignupDialog">
+      <vs-dialog prevent-close :loading="apiLoading" v-model="showSigninDialog">
 
         <template #header>
           <h4 class="not-margin">
@@ -70,21 +70,48 @@
               Sign In
             </vs-button>
 
-            <a class="mt-3" href="#">Esqueceu sua senha?</a>
+            <a class="mt-3" @click="requestRecovery" >Esqueceu sua senha?</a>
 
             <div class="new">
-              Novo aqui? <a href="#">Crie sua conta</a>
+              Novo aqui? <a @click="goToSignup()" >Crie sua conta</a>
             </div>
           </div>
         </template>
 
       </vs-dialog>
 
+      <vs-dialog prevent-close :loading="apiLoading" v-model="showRecoveryDialog">
+        <template #header>
+          <h4 class="not-margin">
+            Preencha com email
+          </h4>
+        </template>
+      
+        <vs-input
+          class="input-outlined-primary"
+          v-model="userRecoveryemail"
+          label-placeholder="Email"
+          primary
+          state="primary"
+        >
+          <template #icon>
+          @
+          </template>
+        </vs-input>
+
+        <div class="d-flex">
+          <vs-button class="ml-a" flat @click="showRecoveryDialog = false" > cancelar </vs-button>
+          <vs-button class="mr-a" :disabled="!userRecoveryemail" @click="requestRecoveryPass()"> continuar </vs-button>
+        </div>
+
+      </vs-dialog>
+
+
     </div>
   </div>
 </template>
 <script>
-import { BIconEye, BIconEyeSlash, BIconParagraph} from 'bootstrap-vue';
+import { BIconEye, BIconEyeSlash, BIconParagraph, BTbody} from 'bootstrap-vue';
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -94,7 +121,8 @@ export default {
     BIconParagraph
   },
   data:() => ({
-    showSignupDialog: false,
+    showSigninDialog: false,
+    showRecoveryDialog: false,
     saveLogin:false,
     value: '',
     hasVisiblePassword: false,
@@ -103,6 +131,7 @@ export default {
 
     ConfirmPasswordInputState: 'primary',
     passwordProgress: 0,
+    userRecoveryemail:'',
 
     userData:{
       email:'',
@@ -140,10 +169,7 @@ export default {
           this.$store.commit('setUserData', userData)
           this.$store.commit('setApiLoading', false)
 
-          this.showSignupDialog = false
-
-          this.$router.push('/ChatList')
-
+          this.showSigninDialog = false
 
           this.checkSavedUser()
         }
@@ -162,18 +188,14 @@ export default {
       })
     },
 
-      // openNotification(param){
-      //   console.log(param)
-      //     this.$vs.notification({
-      //         color: 'dark',
-      //         position: 'bottom-rigth',
-      //         title: 'Documentation Vuesax 4.0+',
-      //         text: `These documents refer to the latest version of vuesax (4.0+),
-      //         to see the documents of the previous versions you can do it here 👉 Vuesax3.x`
-      //     })
-      // },
+    goToSignup(){
+      // signupOption()
+      this.$store.commit('setSinupOptionFromSignin', true)
+      this.showSigninDialog = false;
+    },
 
     checkSavedUser(){
+      // console.log(this.saveLoginState)
       if(this.saveLoginState == true){
         let email = {
           saveLoginState: true,
@@ -184,15 +206,37 @@ export default {
       }else{
         localStorage.removeItem('savedLogin');
       }
+
+      this.$router.push('/ChatList')
     },
 
     checkSavedLogin(){
       let savedParam = JSON.parse(localStorage.getItem('savedLogin'))
-      console.log(savedParam)
       if(savedParam){
         this.saveLoginState = savedParam.saveLoginState
         this.userData.email = savedParam.email
       }
+    },
+
+    requestRecovery(){
+      this.showSigninDialog = false
+      this.showRecoveryDialog = true
+    },
+
+    async requestRecoveryPass() {
+      const body = {
+        email:this.userRecoveryemail
+      }
+
+      const requestRecoveryAPI = await this.$http.post(this.$url+'/forgot/pass', body).catch(err => { console.log(err) })
+      if(requestRecoveryAPI.status === 200 && requestRecoveryAPI.data.success === true){
+        localStorage.setItem('recoveryEmailSelected', this.userRecoveryemail)
+        this.$vs.notification({ color: 'dark', position: 'top-center', title: 'Emial de recuperação de senha foi enviado!', })
+        this.showRecoveryDialog = false
+      }else{
+        this.$vs.notification({ color: 'danger', position: 'top-center', title: 'Ops! Algo deu errado, tente novamente', })
+      }
+
     }
   },
 
@@ -205,12 +249,23 @@ export default {
     ...mapGetters({
       prodUrl: 'prodUrl',
       apiLoading:'apiLoading',
+      signinOptionFromSinup: 'signinOptionFromSinup'
     })
 
   },
 
   watch:{
+    signinOptionFromSinup(){
+      if(this.signinOptionFromSinup){
+        this.showSigninDialog = true
+      }
+    },
 
+    showSigninDialog() {
+      if(!this.showSigninDialog) {
+        this.$store.commit('setSigninOptionFromSinup', false)
+      }
+    }
   }
 }
 </script>

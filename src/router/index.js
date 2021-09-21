@@ -19,6 +19,13 @@ const routes = [
         name: 'Home',
         component: Home
       },
+      {
+        path: '/recovery/password/:id',
+        name: 'recovery password',
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/public/RecoveryPass.vue')
+        }
+      },
     ]
   },
   {

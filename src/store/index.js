@@ -12,12 +12,16 @@ export default new Vuex.Store({
     userData:'',
     apiLoading:false,
     toogleChatsMenu:false,
+    sinupOptionFromSignin:false,
+    signinOptionFromSinup:false,
   },
   getters:{
     prodUrl: state => state.prodUrl,
     userData: state => state.userData,
     toogleChatsMenu: state => state.toogleChatsMenu,
     apiLoading: state => state.apiLoading,
+    sinupOptionFromSignin: state => state.sinupOptionFromSignin,
+    signinOptionFromSinup: state => state.signinOptionFromSinup,
   },
   mutations: {
     setProdUrl(state, data){
@@ -32,6 +36,12 @@ export default new Vuex.Store({
     setApiLoading(state, data){
       state.apiLoading = data
     },
+    setSinupOptionFromSignin(state, data){
+      state.sinupOptionFromSignin = data
+    },
+    setSigninOptionFromSinup(state, data){
+      state.signinOptionFromSinup = data
+    },
   },
   actions: {
     async getUserData(context){
@@ -40,7 +50,7 @@ export default new Vuex.Store({
       await axios.get(process.env.VUE_APP_PROD_URL + `/user/${userId}`)
       .then(resp => {
         console.log('resp', resp.data)
-        context.commit('setUserData', resp.data)
+        context.commit('setUserData', resp.data.content)
       })
       .catch(err => {
         console.log(err)

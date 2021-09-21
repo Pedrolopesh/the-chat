@@ -31,7 +31,6 @@
 export default {
     methods:{
         handleClick(){
-            console.log("kdpoakpdkapodksakpskap")
         }
     }
 }

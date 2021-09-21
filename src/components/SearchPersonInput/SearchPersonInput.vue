@@ -58,8 +58,6 @@ export default {
                 return this.savedChatConections.filter(el => el.userData.name.toLowerCase().indexOf(query.toLowerCase()) > -1);
             };
 
-            console.log('filterItems(textParam)', filterItems(textParam))
-
             this.$store.commit('setSavedChatConections', filterItems(textParam))
         },
 

@@ -31,15 +31,28 @@
                     </vs-button>
 
                     <button
-                        v-else
+                        v-if="selectedSourceFile"
                         :loading="apiLoading"
                         @click="confirmUpdateImage"
                         class="confirm-update-image"
                     >
                         <BIconCheck2All class="ml-2 font-25"/>
                     </button>
+
               </template>
+              
+
             </vs-avatar>
+                    <vs-button
+                        danger
+                        v-if="selectedSourceFile"
+                        :loading="apiLoading"
+                        @click="selectedSourceFile = false"
+                        class="ac mt-4"
+                    >
+                            <!-- class="confirm-update-image" -->
+                        <BIconXCircle class="font-25"/>
+                    </vs-button>
 
             <div class="mt-4 containe-update-data">
                 <h3 class="p10">{{ userData.email }}</h3>
@@ -62,7 +75,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import { BIconPen, BIconCheck2All, BIconPersonCircle } from 'bootstrap-vue';
+import { BIconPen, BIconCheck2All, BIconXCircle, BIconPersonCircle } from 'bootstrap-vue';
 
 export default {
 
@@ -95,7 +108,6 @@ export default {
             const files = event.target.files;
             this.selectedSourceFile = event.target.files[0];
 
-            // console.log(files)
             // this.src = files
             // this.selectedFile = true
 
@@ -165,14 +177,10 @@ export default {
     },
     watch: {
         userData(){
-            console.log('userData mudou')
-            console.log(this.userData)
             this.selectedUser = this.userData
         }
     },
     created() {
-        // console.log('USER DATA')
-        // console.log(this.userData)
         if(this.userData === null){
             this.getUserData()
         }

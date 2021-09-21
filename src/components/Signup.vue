@@ -109,7 +109,7 @@
             </vs-button> -->
 
             <div class="new">
-              Já possui uma conta? <a href="#">faça seu login</a>
+              Já possui uma conta? <a href="#" @click="signinOption()">faça seu login</a>
             </div>
           </div>
         </template>
@@ -174,17 +174,16 @@ export default {
       }
     },
 
-    saveLogin(){
-
+    signinOption(){
+      this.showSignupDialog = false
+      this.$store.commit('setSigninOptionFromSinup', true)
     },
 
     trySignup(){
       this.$store.commit('setApiLoading', true)
       this.$http.post(this.prodUrl + '/signup', this.userData)
       .then(resp =>{
-        console.log(resp)
         if(resp.data.success == true && resp.data.message != "User Alredy exist"){
-          console.log("sucesso")
 
           this.$vs.notification({
             color: 'success',
@@ -198,7 +197,6 @@ export default {
           this.imageProfileOption = true
 
         }else if(resp.data.success == false && resp.data.message == "User Alredy exist"){
-          console.log("erro")
           this.emailInput = 'input-outlined-red'
           this.emailInputState = 'danger'
           this.$vs.notification({
@@ -257,6 +255,7 @@ export default {
     ...mapGetters({
       prodUrl: 'prodUrl',
       apiLoading:'apiLoading',
+      sinupOptionFromSignin: 'sinupOptionFromSignin'
     })
   },
 
@@ -265,12 +264,16 @@ export default {
   },
 
   watch:{
-    saveLoginState(val){
-      console.log("teste teste teste")
-      // if(this.saveLoginState){
-      //   let email = this.userData.email
-      //   localStorage.setItem('savedEmail', JSON.stringify(email));
-      // }
+    sinupOptionFromSignin(){
+      if(this.sinupOptionFromSignin){
+        this.showSignupDialog = true
+      }
+    },
+
+    showSignupDialog(){
+      if(!this.showSignupDialog) {
+        this.$store.commit('setSinupOptionFromSignin', false)
+      }
     }
   }
 }

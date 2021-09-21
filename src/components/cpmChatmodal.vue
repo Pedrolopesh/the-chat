@@ -285,21 +285,19 @@ export default {
           // here we use "$nextTick so it will only excecute the content of this function on the next rander ..meaning ,the next render after our request (on v -for_)"
           let scrollContainer = document.querySelector('#container-chat')
           scrollContainer.scrollTop = scrollContainer.scrollHeight;
-          // console.log(scrollContainer)
 
         })
       },
 
       checkEnterKey(e) {
         if(e.which == 13){
-          console.log('TECLA ENTER')
           this.createMessage()
         }
       },
 
       checkOriginUser(){
-        console.info(this.chatOrigin)
-        console.info(this.userData)
+        // console.info(this.chatOrigin)
+        // console.info(this.userData)
       }
 
       // formatMessage(){
