@@ -70,7 +70,7 @@
               Sign In
             </vs-button>
 
-            <a class="mt-3" @click="requestRecovery" >Esqueceu sua senha?</a>
+            <a class="mt-3" @click="requestUpdatePassword()" >Esqueceu sua senha?</a>
 
             <div class="new">
               Novo aqui? <a @click="goToSignup()" >Crie sua conta</a>
@@ -101,7 +101,33 @@
 
         <div class="d-flex">
           <vs-button class="ml-a" flat @click="showRecoveryDialog = false" > cancelar </vs-button>
-          <vs-button class="mr-a" :disabled="!userRecoveryemail" @click="requestRecoveryPass()"> continuar </vs-button>
+          <vs-button class="mr-a" :disabled="!userRecoveryemail" @click="requestRecoveryPass()" :loading="apiLoading"> continuar </vs-button>
+        </div>
+
+      </vs-dialog>
+
+      <vs-dialog prevent-close :loading="apiLoading" v-model="showCodeDialog">
+        <template #header>
+          <h4 class="not-margin">
+            Preencha com o <strong>PIN</strong>
+          </h4>
+        </template>
+      
+        <vs-input
+          class="input-outlined-primary"
+          v-model="userRecoveryCode"
+          label-placeholder="pin"
+          primary
+          state="primary"
+        >
+          <template #icon>
+          @
+          </template>
+        </vs-input>
+
+        <div class="d-flex">
+          <vs-button class="ml-a" flat @click="showRecoveryDialog = false" > cancelar </vs-button>
+          <vs-button class="mr-a" :disabled="!userRecoveryemail" @click="requestConfirmRecoveryPass()" :loading="apiLoading"> continuar </vs-button>
         </div>
 
       </vs-dialog>
@@ -111,7 +137,7 @@
   </div>
 </template>
 <script>
-import { BIconEye, BIconEyeSlash, BIconParagraph, BTbody} from 'bootstrap-vue';
+import { BIconEye, BIconEyeSlash, BIconParagraph } from 'bootstrap-vue';
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -127,11 +153,13 @@ export default {
     value: '',
     hasVisiblePassword: false,
     
+    showCodeDialog: false,
     saveLoginState:false,
 
     ConfirmPasswordInputState: 'primary',
     passwordProgress: 0,
     userRecoveryemail:'',
+    userRecoveryCode:'',
 
     userData:{
       email:'',
@@ -218,26 +246,50 @@ export default {
       }
     },
 
-    requestRecovery(){
+    requestUpdatePassword(){
       this.showSigninDialog = false
       this.showRecoveryDialog = true
     },
 
     async requestRecoveryPass() {
+      this.$store.commit('setApiLoading', true)
       const body = {
         email:this.userRecoveryemail
       }
 
       const requestRecoveryAPI = await this.$http.post(this.$url+'/forgot/pass', body).catch(err => { console.log(err) })
       if(requestRecoveryAPI.status === 200 && requestRecoveryAPI.data.success === true){
+        this.$store.commit('setApiLoading', false)
         localStorage.setItem('recoveryEmailSelected', this.userRecoveryemail)
         this.$vs.notification({ color: 'dark', position: 'top-center', title: 'Emial de recuperação de senha foi enviado!', })
         this.showRecoveryDialog = false
+        this.showCodeDialog = true
       }else{
+        this.$store.commit('setApiLoading', false)
         this.$vs.notification({ color: 'danger', position: 'top-center', title: 'Ops! Algo deu errado, tente novamente', })
       }
+    },
 
-    }
+    async requestConfirmRecoveryPass(){
+      this.$store.commit('setApiLoading', true)
+        const body = {
+          email:this.userRecoveryemail,
+          code: this.userRecoveryCode
+        }
+
+        const confirmRecovery = await this.$http.post(this.$url+'/confirm/recovery/code', body).catch(err => { console.log(err) })
+        if(confirmRecovery.status === 200 && confirmRecovery.data.success === true){
+          this.$store.commit('setApiLoading', false)
+          this.$vs.notification({ color: 'dark', position: 'top-center', title: 'Escolha sua nova senha', })
+          localStorage.setItem('savedStep', 'password_selection')
+          this.$router.push(`/recovery/password/${this.userRecoveryCode}`)
+        
+        }else{
+          this.$store.commit('setApiLoading', false)
+          this.$vs.notification({ color: 'danger', position: 'top-center', title: 'Ops! Algo deu errado, tente novamente', })
+        }
+
+    },
   },
 
   created(){
