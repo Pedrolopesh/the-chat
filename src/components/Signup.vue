@@ -154,9 +154,9 @@ export default {
     emailInputState:'primary',
 
     userData:{
-      name:'Pedro Lopes Test',
-      email:'pedrolopeshls99@gmail.com',
-      password:'123123'
+      name:'',
+      email:'',
+      password:''
     }
   }),
   methods:{
