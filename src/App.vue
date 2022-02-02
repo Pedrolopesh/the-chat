@@ -8,6 +8,24 @@
   </div>
 </template>
 
+<script>
+
+export default {
+    data:() => ({ }),
+
+    created(){
+      this.pingSever()
+    },
+
+    methods: {
+      async pingSever() {
+        const response = await this.$http.get(this.$url + '/')
+        console.log(response)
+      }
+    },
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
