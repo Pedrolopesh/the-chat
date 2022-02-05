@@ -133,17 +133,12 @@ export default {
         },
 
         toogleChatInfo() {
-
-            if(!this.toogleChatInfoState) {
-                this.$store.commit('setToogleChatsMenu', true)
-                this.toogleChatInfoState = true
-                // this.changeToogleChatsMenu(true)
+            const currentPath = document.location.hash
+            if(currentPath === '#/Introduction'){
+                this.$router.push('/ChatList')
             }
-            else {
-                // this.changeToogleChatsMenu(false)
-                this.$store.commit('setToogleChatsMenu', false)
-                this.toogleChatInfoState = false
-            }
+            this.$store.commit('setToogleChatsMenu', !this.toogleChatInfoState)
+            this.toogleChatInfoState = !this.toogleChatInfoState
         },
 
         openModalNewChat() {
@@ -159,11 +154,7 @@ export default {
         },
 
         tryLogout(){
-            this.$vs.notification({
-            color: 'dark',
-            position: 'top-center',
-            title: 'Tchau tchau, nos vemos logo 🤩',
-            })
+            this.$vs.notification({color: 'dark', position: 'top-center', title: 'Tchau tchau, nos vemos logo 🤩', })
             localStorage.removeItem('token');
             localStorage.removeItem('_id');
             this.$router.push('/Home')
@@ -171,9 +162,9 @@ export default {
     },
 
     watch: {
-        // toogleChatsMenu(){
-        //     console.log('toolbar', this.toogleChatsMenu)
-        // },
+        toogleChatsMenu(){
+            console.log('toolbar', this.toogleChatsMenu)
+        },
     }
 
 }

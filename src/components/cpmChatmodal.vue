@@ -57,7 +57,7 @@
 
           </div>
             <!-- </perfect-scrollbar> -->
-            <div class="text-box-chat">
+            <div class="text-box-chat ac">
               <div class="d-flex">
                   <textarea @keyup="checkEnterKey" class="text-input-chat" v-model="newMessage"/>
                   <vs-button :loading="newMessageLoading" type="submit" :disabled="newMessage ? false : true">
@@ -126,7 +126,12 @@ export default {
       // alert('testeeeee ahhhhhh ahh')
     },
 
+    mounted(){
+
+    },
+
     created() {
+        // this.setChatHeight()
         this.loadChatById()
         let vm = this;
         this.socket.on('connection', (socket) => {
@@ -136,7 +141,6 @@ export default {
         this.socket.on('messageRecived', function(message) {
           vm.newSocketMessage.push(message)
         })
-
     },
 
     methods: {
@@ -154,6 +158,16 @@ export default {
       ...mapActions({
         changeChatById: 'changeChatById',
       }),
+
+      setContenChatHeight() {
+        setTimeout(() => {
+          let windowHeight = window.innerHeight
+          console.log("Chat content - ", windowHeight)
+          const elementDiv = document.querySelector('.chat-content')
+          console.log("elementDiv - ", elementDiv)
+          elementDiv.style.height = `${windowHeight - 150}px`
+        }, 500)
+      },
 
       async loadChatById(){
         // alert('chat id is' + this.chatId)
@@ -323,6 +337,10 @@ export default {
       chatId(){
         this.loadChatById()
       },
+
+      chatMessages(){
+        this.setContenChatHeight()
+      }
     }
 }
 </script>

@@ -110,19 +110,11 @@ export default {
             .then(resp =>{
                 if(resp.data.error == 'Alredy have a chat'){
                     console.log(resp.data.message._id)
-                    this.$vs.notification({
-                        color: 'danger',
-                        position: 'top-center',
-                        title: 'você já possui uma conversa com esse usuário. vá em conversas 😓',
-                    })
+                    this.$vs.notification({ color: 'danger', position: 'top-center', title: 'você já possui uma conversa com esse usuário. vá em conversas 😓', })
                 }else{
                     sessionStorage.setItem('chatId', JSON.stringify(resp.data));
                     this.$store.commit('setChatCreated', true)
-                    this.$vs.notification({
-                        color: 'success',
-                        position: 'top-center',
-                        title: 'Nova conversa adicionada com sucesso, 👏',
-                    })
+                    this.$vs.notification({ color: 'success', position: 'top-center', title: 'Nova conversa adicionada com sucesso, 👏', })
                     this.$store.commit('setChatId', resp.data)
                     this.$emit('closeNewChatModal', false)
                 }

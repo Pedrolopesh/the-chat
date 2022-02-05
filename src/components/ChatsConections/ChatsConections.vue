@@ -10,9 +10,7 @@
                     <div class="mr-4">
                         <Avatar :img_profile="item.userData.img_profile" />
                     </div>
-                    <span class="clr-white">
-                        {{ item.userData.name }}
-                    </span>
+                    <span class="clr-white alg-txt-s"> {{ item.userData.name }} </span>
                 </button>
             </div>
         </div>
@@ -44,11 +42,14 @@ export default {
     methods:{
         ...mapActions({
             getUserData: 'getUserData',
+            changeToogleChatsMenu: 'changeToogleChatsMenu'
         }),
 
         setSelectedChatOption(selectedChat, selectedChatInfoId) {
             this.selectedComponentChatId = selectedChatInfoId
             this.$emit('setSelectedUser', selectedChat, selectedChatInfoId)
+            this.changeToogleChatsMenu(false)
+            
         }
     },
 }
