@@ -91,7 +91,7 @@ export default {
 
     data:() => ({
       // socket: io('http://localhost:3333/'),
-      socket: io('https://the-chat-api.herokuapp.com/'),
+      socket: io('https://ea39-45-182-163-21.sa.ngrok.io/'),
         messagens:[
           {sendedName:'Fernanda', SendedMessage:'olá pedro, esse vai ser o nosso chat', sendedTimestamp:'08:00'},
         ],
